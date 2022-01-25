@@ -1,6 +1,15 @@
 <script>
-  import { loading } from '../../store';
+  import { loading } from "../../store";
 </script>
+
+<div class="loader" id="loader">
+  {#if $loading === true}
+    <div class="loader-head">
+      <div class="first-indicator" />
+      <div class="second-indicator" />
+    </div>
+  {/if}
+</div>
 
 <style type="text/css">
   .loader {
@@ -104,12 +113,3 @@
     }
   }
 </style>
-
-<div class="loader" id="loader">
-  {#if $loading === true}
-    <div class="loader-head">
-      <div class="first-indicator" />
-      <div class="second-indicator" />
-    </div>
-  {/if}
-</div>

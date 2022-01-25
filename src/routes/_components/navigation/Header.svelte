@@ -1,13 +1,12 @@
 <script>
   import { openLogin } from "../../../utilis/utilis";
-  // import Searchbox from "../Searchbox.svelte";
   import { stores } from "@sapper/app";
   const { session } = stores();
 
   export let logout;
-  export let user;
-
-  user && console.log(user.profileImage);
+  export let profile;
+  export let about;
+  //profile && console.log(profile.bio.username);
 </script>
 
 <header id="header">
@@ -71,17 +70,17 @@
       {:else}
         <div class="item logged has-tablet">
           <a
-            href={`/profiles/${user && user._id}`}
+            href={`/profiles/${profile && profile.userId._id}`}
             class="text-black text-capitalize profile-name"
-            >{user && user.userName}</a
+            >{profile && profile.bio.userName}</a
           >
           <div class="bt-dropdown bt-menu-user">
             <figure class="avatar">
               <img
-                src={user && user.profileImage
-                  ? user.profileImage.image70URL
+                src={profile && profile.profilePicture.length > 0
+                  ? profile.profilePicture.imageURL
                   : "https://images.unsplash.com/photo-1511367461989-f85a21fda167?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=70&h=70"}
-                alt={user && user.userName}
+                alt={profile && profile.bio.username}
                 width="32"
                 height="32"
               />
@@ -92,7 +91,11 @@
               <div class="bar" />
             </div>
             <ul>
-              <li><a href={`/profiles/${user && user._id}`}>Profile</a></li>
+              <li>
+                <a href={`/profiles/${profile && profile.userId._id}`}
+                  >Profile</a
+                >
+              </li>
 
               <li><a href={`/profiles/settings`}>Settings </a></li>
 
@@ -109,7 +112,7 @@
 
       {#if $session.token}
         <div class="item has-tablet" id="bt-submit">
-          <a href="/article/publisharticle" class="button button-large">
+          <a href="/contestant/profile" class="button button-large">
             <span>Edit Profile</span>
           </a>
         </div>
@@ -117,12 +120,17 @@
     </div>
     <div class="logo-header">
       <a href="/">
-        <span>
-          <img
-            src="https://res.cloudinary.com/matrixweb/image/upload/v1602212213/arierepublicationlogo_nprdql.svg"
-            alt=""
-          />
+        <span style="font-size: 14px;">
+          {about?.name}
         </span>
+        <!--
+          <span>
+            <img
+              src="https://res.cloudinary.com/matrixweb/image/upload/v1602212213/arierepublicationlogo_nprdql.svg"
+              alt=""
+            />
+          </span>
+        -->
       </a>
     </div>
   </div>

@@ -1,21 +1,21 @@
 <script>
   import { onMount } from "svelte";
-  //import UserLikes from "./UserLikes.svelte";
-  //import { stores } from "@sapper/app";
-  import { formatDate, url } from "../../../../utilis/utilis";
-  import { alertMsg, loading } from "../../../store";
-  //const { session } = stores();
+  import { formatDate, url } from "../../../utilis/utilis";
+  import { loading } from "../../../store";
 
   let todayContestant;
 
   onMount(async () => {
     try {
       $loading = true;
-      const res = await fetch(`${url}/contestants/finalist/random?num=1`);
+      //const res = await fetch(`${url}contestants/finalist/random?num=1`);
+      const res = await fetch(
+        `${url}contestants/user/61eb371ea4365d2d4fd10411`
+      );
 
       const resData = await res.json();
 
-      todayContestant = await resData.data[0];
+      todayContestant = await resData.data;
 
       $loading = false;
     } catch (err) {
@@ -31,8 +31,8 @@
       <a href={`/contestant/${todayContestant.userId._id}`}>
         <!-- svelte-ignore a11y-img-redundant-alt -->
         <img
-          src={todayContestant.profilePicture
-            ? todayContestant.profilePicture[0].imageURL
+          src={todayContestant.profilePicture.length > 0
+            ? todayContestant.profilePicture[0].imageLgURL
             : `https://source.unsplash.com/1900x700/weekly?contest`}
           alt="Background Large Image"
           width="1900"
@@ -45,7 +45,7 @@
       <a href={`/contestant/${todayContestant.userId._id}`}>
         <!--svelte-ignore a11y-img-redundant-alt-->
         <img
-          src={todayContestant.profilePicture
+          src={todayContestant.profilePicture.length > 0
             ? todayContestant.profilePicture[0].imageURL
             : `https://source.unsplash.com/1900x700/weekly?contest`}
           data-srcset=""

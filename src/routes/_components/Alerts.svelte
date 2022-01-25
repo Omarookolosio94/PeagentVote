@@ -1,6 +1,6 @@
 <script>
-  import { onDestroy } from 'svelte';
-  import { alertMsg } from '../../store';
+  import { onDestroy } from "svelte";
+  import { alertMsg } from "../../store";
 
   $: timeout = $alertMsg
     ? setTimeout(() => ($alertMsg = null), 3000)
@@ -8,6 +8,14 @@
 
   onDestroy(() => clearTimeout(timeout));
 </script>
+
+{#if $alertMsg}
+  <div class="alert-box">
+    {#each $alertMsg.message as alert}
+      <p class={`alert ${$alertMsg.type}`}>{alert.msg}</p>
+    {/each}
+  </div>
+{/if}
 
 <style>
   .alert-box {
@@ -43,11 +51,3 @@
     background-color: #b85c5c;
   }
 </style>
-
-{#if $alertMsg}
-  <div class="alert-box">
-    {#each $alertMsg.message as alert}
-      <p class={`alert ${$alertMsg.type}`}>{alert.msg}</p>
-    {/each}
-  </div>
-{/if}

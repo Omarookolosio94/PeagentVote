@@ -5,7 +5,7 @@
         <div class="row"><strong>Place Ad Today</strong></div>
         <div class="row row-auto">
           <div class="title">
-            Advertise with us at Premium Prices
+            Become A Sponsor
             <!-- <div>
               <div class="box-dropdown" onclick="openDropDown(event)">
                 <div class="option-active">Learn More</div>
@@ -20,6 +20,11 @@
               </div>
             </div>
              -->
+            <div class="box-bl" style="margin-top: 20px;">
+              <a href={`\contact`} class="js-visit-item bt-default green-fill">
+                Contact us
+              </a>
+            </div>
           </div>
         </div>
         <div class="row" />

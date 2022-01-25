@@ -2,9 +2,10 @@
   import Sidenav from "./Sidenav.svelte";
   import Header from "./Header.svelte";
   import { stores } from "@sapper/app";
-  import { alertMsg, user, loading } from "../../../store";
-  import { url } from "../../../../utilis/utilis";
+  import { alertMsg, profile, loading, about } from "../../../store";
+  import { url } from "../../../utilis/utilis";
   import { beforeUpdate } from "svelte";
+  import { onMount } from "svelte";
 
   const { session } = stores();
 
@@ -15,7 +16,7 @@
       });
 
       $session.token = null;
-      $user = null;
+      $profile = null;
 
       alertMsg.set({
         type: "success",
@@ -26,16 +27,18 @@
     }
   }
 
-  async function fetchUser() {
+  async function fetchProfile() {
     try {
       $loading = true;
-      const res = await fetch(`${url}/users/user`, {
+      const res = await fetch(`${url}contestants/user`, {
         headers: {
           Authorization: "Bearer " + $session.token,
         },
       });
       const resData = await res.json();
-      $user = { ...resData.data };
+
+      $profile = { ...resData.data };
+
       $loading = false;
     } catch (err) {
       $loading = false;
@@ -44,10 +47,30 @@
     }
   }
 
+  async function fetchAbout() {
+    try {
+      $loading = true;
+      const res = await fetch(`${url}admin/about`);
+      const resData = await res.json();
+
+      $about = { ...resData.data };
+
+      $loading = false;
+    } catch (err) {
+      $loading = false;
+
+      console.log(err);
+    }
+  }
+
+  onMount(async () => {
+    fetchAbout();
+  });
+
   beforeUpdate(async () => {
-    if ($session.token && !$user) fetchUser();
+    if ($session.token && !$profile) fetchProfile();
   });
 </script>
 
-<Sidenav {logout} user={$user} />
-<Header {logout} user={$user} />
+<Sidenav {logout} profile={$profile} />
+<Header {logout} profile={$profile} about={$about} />

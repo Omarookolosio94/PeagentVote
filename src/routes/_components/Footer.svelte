@@ -1,22 +1,37 @@
+<script>
+  import { about } from "../../store";
+</script>
+
 <footer id="footer">
   <div class="box-top">
     <div class="inner">
       <div class="box-left">
         <h2 class="headline slogan not-mobile">
-          The face of Nigeria beauty contest
+          {$about?.name}
         </h2>
         <ul class="menu-footer">
           <li><a href="/about" class="item">About Us</a></li>
           <li><a href="/profiles" class="item">Contestant</a></li>
           <li><a href="/profiles" class="item">Sponsors</a></li>
         </ul>
-        <!-- <p class="follow">
-          <strong>Follow us</strong>
-          <a rel="noopener" href="/" target="_blank">Twitter</a>
-          <a rel="noopener" href=" /" target="_blank">Facebook</a>
-          <a rel="noopener" href=" " target="_blank">Instagram</a>
-          <a rel="noopener" href=" " target="_blank">Linkedin</a>
-        </p> -->
+        <p class="follow">
+          {#if $about?.social}
+            <strong>Follow us</strong>
+            <a rel="noopener" href={$about.social.twitter} target="_blank"
+              >Twitter</a
+            >
+            <a rel="noopener" href={$about?.social.facebook} target="_blank"
+              >Facebook</a
+            >
+            <a rel="noopener" href={$about?.social.instagram} target="_blank"
+              >Instagram</a
+            >
+            <a rel="noopener" href={$about?.social.youtube} target="_blank"
+              >Youtube</a
+            >
+            <a href={`tel:` + $about?.social?.whatsapp}>Whatsapp </a>
+          {/if}
+        </p>
       </div>
     </div>
   </div>

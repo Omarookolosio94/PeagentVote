@@ -1,12 +1,15 @@
 <svelte:options immutable />
 
 <script>
-  import { populate, url } from "../../utilis/utilis";
+  import { populate, url } from "../utilis/utilis";
   import { onMount } from "svelte";
   import Sitehead from "./_components/siteHead/Sitehead.svelte";
   import Boxheading from "./_components/Boxheading.svelte";
   import ContestantLi from "./_components/contestant/ContestantLi.svelte";
   import { loading } from "../store";
+  import AdvertLi from "./_components/advert/advertLi.svelte";
+  import FinalistLi from "./_components/contestant/FinalistLi.svelte";
+  import Sponsors from "./_components/advert/sponsors.svelte";
 
   let todayFinalist = [];
   let listedFinalist = [];
@@ -15,12 +18,12 @@
   let totalPages;
   let pageLoading;
 
-  const fetchFinalist = async (page = 1, limit = 10) => {
+  const fetchFinalist = async (page = 1, limit = 5) => {
     try {
       $loading = true;
 
       const res = await fetch(
-        `${url}/contestants/finalist/page?page=${page}&limit=${limit}`
+        `${url}contestants/finalist/page?page=${page}&limit=${limit}`
       );
 
       const resData = await res.json();
@@ -55,29 +58,13 @@
     try {
       $loading = true;
 
-      const res = await fetch(`${url}/contestants/finalist/random?num=6`);
+      const res = await fetch(`${url}contestants/finalist/random?num=3`);
 
       const resData = await res.json();
+
+      console.log(resData);
 
       todayFinalist = await resData.data;
-
-      $loading = false;
-    } catch (err) {
-      $loading = false;
-
-      console.log(err);
-    }
-  };
-
-  const fetchSingleRandomFinalist = async () => {
-    try {
-      $loading = true;
-
-      const res = await fetch(`${url}/contestants/finalist/random?num=1`);
-
-      const resData = await res.json();
-
-      todayFinalist = await resData.data[0];
 
       $loading = false;
     } catch (err) {
@@ -91,37 +78,21 @@
     fetchRandomFinalist();
   });
 
-  /*
-const deleteListedArticle = async (e) => {
-    let fetchedArticle = await fetchSingleRandomArticle();
-    listedArticles = listedArticles
-    .filter((article) => article._id !== e.detail)
-    .concat(fetchedArticle);
-};
-*/
-
-  /*
-const deleteTodayArticle = async (e) => {
-    let fetchedArticle = await fetchSingleRandomArticle();
-    todayArticle = todayArticle
-    .filter((article) => article._id !== e.detail)
-    .concat(fetchedArticle);
-};
-*/
-
   onMount(async () => {
-    fetchFinalist(1, 10);
+    fetchFinalist(1, 5);
   });
 
   onMount(async () => {
     try {
       $loading = true;
 
-      const res = await fetch(`${url}/admin/about`);
+      const res = await fetch(`${url}admin/about`);
 
       const resData = await res.json();
 
       about = await resData.data;
+
+      console.log(about);
 
       $loading = false;
     } catch (err) {
@@ -133,7 +104,7 @@ const deleteTodayArticle = async (e) => {
 </script>
 
 <svelte:head>
-  <title>Welcome to {about.name}</title>
+  <title>Welcome to Peagent</title>
 </svelte:head>
 
 <svelte:window on:scroll={page < totalPages && populate(loadListedFinalist)} />
@@ -146,12 +117,12 @@ const deleteTodayArticle = async (e) => {
       <Boxheading
         headStyle="no-flex"
         headTitle="Contestant"
-        headSpan="Selected Articles"
+        headSpan="Selected Finalist"
       />
       <div class="grid js-grid">
         <ul class="list-items list-flex list-one-row">
-          {#each todayFinalist as finalist}
-            <ContestantLi {finalist} />
+          {#each todayFinalist as contestant}
+            <FinalistLi {contestant} />
           {/each}
         </ul>
       </div>
@@ -159,7 +130,6 @@ const deleteTodayArticle = async (e) => {
   </div>
 {/if}
 
-<!--
 <div class="block p-0">
   <div class="inner">
     <Boxheading
@@ -172,11 +142,8 @@ const deleteTodayArticle = async (e) => {
     <div class="grid">
       <ul class="list-items list-flex list-one-row">
         <AdvertLi />
-        {#if collection}
-          {#each collection as collection}
-            <CollectionLi {collection} />
-          {/each}
-        {/if}
+        <Sponsors />
+        <Sponsors />
       </ul>
     </div>
   </div>
@@ -187,19 +154,17 @@ const deleteTodayArticle = async (e) => {
     <Boxheading
       headStyle="no-flex"
       headTitle="Explore"
-      headSpan="Choose Your Poision"
+      headSpan="Vote for your favourite"
     />
 
     <div class="grid js-grid">
       <ul class="list-items list-flex list-one-row">
-        {#if listedArticles}
-          {#each listedArticles as article}
-            <ArticleLi {article} on:deleteArticle={deleteListedArticle} />
+        {#if listedFinalist}
+          {#each listedFinalist as contestant}
+            <FinalistLi {contestant} />
           {/each}
         {/if}
       </ul>
     </div>
   </div>
-
 </div>
--->

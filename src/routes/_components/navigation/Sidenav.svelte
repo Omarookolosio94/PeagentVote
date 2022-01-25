@@ -3,7 +3,7 @@
   import { openLogin } from "../../../utilis/utilis";
   const { session } = stores();
   export let logout;
-  export let user;
+  export let profile;
 
   let openMenu = false;
 
@@ -26,11 +26,13 @@
         </li>
       {:else}
         <li class="dropdown has-mobile" on:click={toggleMenu}>
-          {#if user}
-            <span class="nav-item">{user.userName}</span>
+          {#if profile}
+            <span class="nav-item">{profile.bio.username}</span>
             <ul id="open-profile" class={openMenu === true ? "open" : null}>
               <li onclick="closeSideNav()">
-                <a href={`/profiles/${user._id}`} class="nav-link">Profile</a>
+                <a href={`/contestant/${profile.userId._id}`} class="nav-link"
+                  >Profile</a
+                >
               </li>
               <li onclick="closeSideNav()">
                 <a href={`/profiles/settings`} class="nav-link">Settings </a>
