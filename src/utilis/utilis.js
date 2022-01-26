@@ -13,8 +13,8 @@ const months = [
   "December",
 ];
 
-export const url = "http://localhost:5000/api/";
-// export const url = "https://arierepublicationapi.herokuapp.com/api";
+//export const url = "http://localhost:5000/api/";
+export const url = "https://peagent.herokuapp.com/api/";
 
 // const maxsize = 3145728;
 const maxsize = 2;
