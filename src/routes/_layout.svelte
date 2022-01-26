@@ -3,6 +3,7 @@
   import Loader from "./_components/Loader.svelte";
   import Footer from "./_components/Footer.svelte";
   import Alerts from "./_components/Alerts.svelte";
+  import AuthForms from "./_components/AuthForms/AuthForms.svelte";
 </script>
 
 <Alerts />
@@ -18,3 +19,4 @@
   </section>
   <Footer />
 </div>
+<AuthForms />

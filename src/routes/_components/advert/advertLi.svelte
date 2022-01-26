@@ -21,7 +21,7 @@
             </div>
              -->
             <div class="box-bl" style="margin-top: 20px;">
-              <a href={`\contact`} class="js-visit-item bt-default green-fill">
+              <a href={`\about`} class="js-visit-item bt-default green-fill">
                 Contact us
               </a>
             </div>

@@ -35,7 +35,7 @@
                 >
               </li>
               <li onclick="closeSideNav()">
-                <a href={`/profiles/settings`} class="nav-link">Settings </a>
+                <a href={`/contestant/settings`} class="nav-link">Settings </a>
               </li>
 
               <li class="logout" on:click={logout} onclick="closeSideNav()">
@@ -47,18 +47,12 @@
             </ul>
           {/if}
         </li>
-
-        <!--
-          <li class="has-mobile" onclick="closeSideNav()">
-            <a href="/article/publisharticle" class="nav-link">Publish Article</a>
-          </li>
-        -->
       {/if}
 
       <li onclick="closeSideNav()"><a href="/" class="nav-link">Home</a></li>
 
       <li onclick="closeSideNav()">
-        <a href="/profiles" class="nav-link">Contestants</a>
+        <a href="/contestant" class="nav-link">Contestants</a>
       </li>
 
       <li onclick="closeSideNav()">

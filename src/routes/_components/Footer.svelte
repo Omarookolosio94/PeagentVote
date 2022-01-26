@@ -11,12 +11,12 @@
         </h2>
         <ul class="menu-footer">
           <li><a href="/about" class="item">About Us</a></li>
-          <li><a href="/profiles" class="item">Contestant</a></li>
-          <li><a href="/profiles" class="item">Sponsors</a></li>
+          <li><a href="/contestant" class="item">Contestant</a></li>
+          <li><a href="/about#sponsors" class="item">Sponsors</a></li>
         </ul>
         <p class="follow">
           {#if $about?.social}
-            <strong>Follow us</strong>
+            <strong>Contact us</strong>
             <a rel="noopener" href={$about.social.twitter} target="_blank"
               >Twitter</a
             >
@@ -30,6 +30,11 @@
               >Youtube</a
             >
             <a href={`tel:` + $about?.social?.whatsapp}>Whatsapp </a>
+            <a
+              href={`mailto:` + $about?.social.email}
+              target="_blank"
+              rel="noopener noreferrer">Email</a
+            >
           {/if}
         </p>
       </div>
@@ -39,10 +44,6 @@
     <div class="inner">
       <div class="box-left">
         <ul class="menu-footer">
-          <li><a rel="nofollow" href="/about">Contact Us</a></li>
-          <!-- <li><a rel="nofollow" href="/about/cookies">Cookies Policy</a></li>
-          <li><a rel="nofollow" href="/about/legal">Legal Terms</a></li>
-          <li><a rel="nofollow" href="/about/policy">Privacy Policy</a></li> -->
           <li>
             <div class="box-select-lang">
               <div class="select" onclick=" ">

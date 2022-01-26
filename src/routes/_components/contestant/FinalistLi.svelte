@@ -7,27 +7,27 @@
   <div class="box-item">
     <figure class="rollover">
       <!--svelte-ignore a11y-missing-content -->
-      <a href={`/contestant/${contestant.userId._id}`} class="item-link" />
-      <div class="box-photo">
-        <img
-          alt="
+      <a href={`/contestant/${contestant.userId._id}`} class="item-link">
+        <div class="box-photo">
+          <img
+            alt="
             "
-          width="417"
-          height="298"
-          class="lazy lazy-loaded"
-          src={contestant.profilePicture.length > 0
-            ? contestant.profilePicture[0]?.imageSmURL
-            : `https://source.unsplash.com/313x224/weekly?model}`}
-        />
-      </div>
-
-      <div class="hover-item center">
-        <div class="tooltip">
-          <div class="box-item">
-            <p style="color: white">Vote</p>
+            width="417"
+            height="298"
+            class="lazy lazy-loaded"
+            src={contestant.profilePicture.length > 0
+              ? contestant.profilePicture[0]?.imageSmURL
+              : `https://source.unsplash.com/313x224/weekly?model}`}
+          />
+        </div>
+        <div class="hover-item center">
+          <div class="tooltip">
+            <div class="box-item">
+              <p style="color: white">Vote</p>
+            </div>
           </div>
         </div>
-      </div>
+      </a>
     </figure>
     <div class="box-info">
       <div class="content">

@@ -31,8 +31,8 @@
       <a href={`/contestant/${todayContestant.userId._id}`}>
         <!-- svelte-ignore a11y-img-redundant-alt -->
         <img
-          src={todayContestant.profilePicture.length > 0
-            ? todayContestant.profilePicture[0].imageLgURL
+          src={todayContestant?.profilePicture?.length > 0
+            ? todayContestant?.profilePicture[2]?.imageLgURL
             : `https://source.unsplash.com/1900x700/weekly?contest`}
           alt="Background Large Image"
           width="1900"
@@ -46,7 +46,7 @@
         <!--svelte-ignore a11y-img-redundant-alt-->
         <img
           src={todayContestant.profilePicture.length > 0
-            ? todayContestant.profilePicture[0].imageURL
+            ? todayContestant.profilePicture[2].imageURL
             : `https://source.unsplash.com/1900x700/weekly?contest`}
           data-srcset=""
           width="417"
@@ -99,9 +99,7 @@
             Vote
           </a>
         </div>
-        <div class="box-br">
-          <!-- <UserLikes /> -->
-        </div>
+        <div class="box-br" />
       </div>
     </div>
   </div>

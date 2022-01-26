@@ -5,15 +5,13 @@
   import { onMount } from "svelte";
   import Sitehead from "./_components/siteHead/Sitehead.svelte";
   import Boxheading from "./_components/Boxheading.svelte";
-  import ContestantLi from "./_components/contestant/ContestantLi.svelte";
-  import { loading } from "../store";
+  import { loading, about } from "../store";
   import AdvertLi from "./_components/advert/advertLi.svelte";
   import FinalistLi from "./_components/contestant/FinalistLi.svelte";
   import Sponsors from "./_components/advert/sponsors.svelte";
 
   let todayFinalist = [];
   let listedFinalist = [];
-  let about;
   let page = 1;
   let totalPages;
   let pageLoading;
@@ -62,9 +60,25 @@
 
       const resData = await res.json();
 
-      console.log(resData);
-
       todayFinalist = await resData.data;
+
+      $loading = false;
+    } catch (err) {
+      $loading = false;
+
+      console.log(err);
+    }
+  };
+
+  const fetchAbout = async () => {
+    try {
+      $loading = true;
+
+      const res = await fetch(`${url}admin/about`);
+
+      const resData = await res.json();
+
+      $about = await resData.data;
 
       $loading = false;
     } catch (err) {
@@ -83,28 +97,12 @@
   });
 
   onMount(async () => {
-    try {
-      $loading = true;
-
-      const res = await fetch(`${url}admin/about`);
-
-      const resData = await res.json();
-
-      about = await resData.data;
-
-      console.log(about);
-
-      $loading = false;
-    } catch (err) {
-      $loading = false;
-
-      console.log(err);
-    }
+    fetchAbout();
   });
 </script>
 
 <svelte:head>
-  <title>Welcome to Peagent</title>
+  <title>Welcome to {$about?.name}</title>
 </svelte:head>
 
 <svelte:window on:scroll={page < totalPages && populate(loadListedFinalist)} />
