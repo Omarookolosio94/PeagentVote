@@ -2,6 +2,7 @@
   import { stores } from "@sapper/app";
   import { openLogin } from "../../../utilis/utilis";
   const { session } = stores();
+
   export let logout;
   export let profile;
 

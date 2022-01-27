@@ -9,11 +9,10 @@
 
   const { session } = stores();
 
-  async function logout() {
+  async function logout(req, res) {
     try {
-      await fetch("/api/logout", {
-        method: "POST",
-      });
+      delete req?.session?.token;
+      res?.end();
 
       $session.token = null;
       $profile = null;

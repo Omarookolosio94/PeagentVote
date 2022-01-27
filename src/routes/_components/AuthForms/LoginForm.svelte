@@ -1,7 +1,7 @@
 <script>
   import { goto, stores } from "@sapper/app";
   import { alertMsg, loading } from "../../../store";
-  import { closeLogin } from "../../../utilis/utilis";
+  import { closeLogin, url } from "../../../utilis/utilis";
 
   const { session } = stores();
 
@@ -19,7 +19,7 @@
       submitting = true;
       error = null;
 
-      const response = await fetch("/api/login", {
+      const response = await fetch(`${url}auth`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -45,7 +45,6 @@
           type: "success",
           message: [{ msg: "Login Successful" }],
         });
-        4;
 
         goto("/");
         closeLogin();
@@ -59,29 +58,12 @@
           });
         }
       }
-
-      /*
-      if (res.status === 422) {
-        error = res.data.data;
-      } else if (res.status === 400) {
-        alertMsg.set({ type: "danger", message: [{ msg: res.data.message }] });
-      } else {
-        $session.token = res.token;
-        alertMsg.set({
-          type: "success",
-          message: [{ msg: "Login Successful" }],
-        });4
-
-        goto("/");
-        closeLogin();
-
-        user = {
-          email: "",
-          password: "",
-        };
-      }
-      */
     } catch (error) {
+      alertMsg.set({
+        type: "danger",
+        message: [{ msg: "An error ocurred, please try again" }],
+      });
+
       $loading = false;
       submitting = false;
     }
