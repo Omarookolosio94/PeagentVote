@@ -6,7 +6,6 @@
   export let logout;
   export let profile;
   export let about;
-  //profile && console.log(profile.bio.username);
 </script>
 
 <header id="header">
@@ -19,23 +18,31 @@
       <h1 class="slogan">The Road To Becoming A Winner Begins Now</h1>
     </div>
     <div class="box-right">
-      <ul class="list-social item">
-        <li>
-          <a target="_blank" rel="noopener" href="/">
-            <i class="fab fa-instagram" />
-          </a>
-        </li>
-        <li>
-          <a target="_blank" rel="noopener" href="/">
-            <i class="fab fa-twitter" />
-          </a>
-        </li>
-        <li>
-          <a target="_blank" rel="noopener" href="/">
-            <i class="fab fa-facebook-f" />
-          </a>
-        </li>
-      </ul>
+      {#if about?.social}
+        <ul class="list-social item">
+          {#if about?.social?.instagram}
+            <li>
+              <a target="_blank" rel="noopener" href={about.social.instagram}>
+                <i class="fab fa-instagram" />
+              </a>
+            </li>
+          {/if}
+          {#if about?.social?.twitter}
+            <li>
+              <a target="_blank" rel="noopener" href={about.social.twitter}>
+                <i class="fab fa-twitter" />
+              </a>
+            </li>
+          {/if}
+          {#if about?.social?.facebook}
+            <li>
+              <a target="_blank" rel="noopener" href={about.social.facebook}>
+                <i class="fab fa-facebook-f" />
+              </a>
+            </li>
+          {/if}
+        </ul>
+      {/if}
     </div>
   </div>
 
@@ -70,17 +77,17 @@
       {:else}
         <div class="item logged has-tablet">
           <a
-            href={`/profiles/${profile && profile.userId._id}`}
+            href={`/contestant/${profile?.userId._id}`}
             class="text-black text-capitalize profile-name"
-            >{profile && profile.bio.userName}</a
+            >{profile?.userId.firstName}</a
           >
           <div class="bt-dropdown bt-menu-user">
             <figure class="avatar">
               <img
                 src={profile && profile.profilePicture.length > 0
-                  ? profile.profilePicture.imageURL
+                  ? profile?.profilePicture[0].image140URL
                   : "https://images.unsplash.com/photo-1511367461989-f85a21fda167?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=70&h=70"}
-                alt={profile && profile.bio.username}
+                alt={profile?.bio?.username}
                 width="32"
                 height="32"
               />
@@ -92,12 +99,10 @@
             </div>
             <ul>
               <li>
-                <a href={`/profiles/${profile && profile.userId._id}`}
-                  >Profile</a
-                >
+                <a href={`/contestant/${profile?.userId?._id}`}>Profile</a>
               </li>
 
-              <li><a href={`/profiles/settings`}>Settings </a></li>
+              <li><a href={`/contestant/edit`}>Settings </a></li>
 
               <li class="logout" on:click={logout}>
                 <a href=" ">
@@ -110,13 +115,15 @@
         </div>
       {/if}
 
-      {#if $session.token}
-        <div class="item has-tablet" id="bt-submit">
-          <a href="/contestant/profile" class="button button-large">
-            <span>Edit Profile</span>
-          </a>
-        </div>
-      {/if}
+      <!--
+        {#if $session.token}
+          <div class="item has-tablet" id="bt-submit">
+            <a href="/contestant/profile" class="button button-large">
+              <span>Edit Profile</span>
+            </a>
+          </div>
+        {/if}
+      -->
     </div>
     <div class="logo-header">
       <a href="/">

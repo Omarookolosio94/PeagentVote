@@ -11,7 +11,7 @@
 
   async function logout() {
     try {
-      await fetch("/auth/logout", {
+      await fetch("/api/logout", {
         method: "POST",
       });
 
@@ -38,6 +38,7 @@
       const resData = await res.json();
 
       $profile = { ...resData.data };
+      $session.id = resData?.data?.userId?._id;
 
       $loading = false;
     } catch (err) {

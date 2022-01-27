@@ -32,6 +32,7 @@ polka()
     sapper.middleware({
       session: (req) => ({
         token: req.session && req.session.token,
+        id: req.session && req.session.id,
       }),
     })
   )

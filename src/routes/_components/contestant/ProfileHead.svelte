@@ -1,8 +1,6 @@
 <script>
   export let profile;
-  //export let user;
-
-  //$: isUser = user && profile._id === user._id;
+  export let isUser = false;
 </script>
 
 <div class="block border-bottom">
@@ -110,7 +108,7 @@
       </div>
       <div class="box-right">
         <ul class="list-bts">
-          {#if !profile?.isContestant}
+          {#if profile?.isFinalist && !isUser}
             <li>
               <a
                 href="/vote/{profile?.userId._id}"
@@ -120,7 +118,9 @@
                 Vote
               </a>
             </li>
-          {:else}
+          {/if}
+
+          {#if isUser}
             <li>
               <a
                 href="contestant/edit"

@@ -27,15 +27,15 @@
       {:else}
         <li class="dropdown has-mobile" on:click={toggleMenu}>
           {#if profile}
-            <span class="nav-item">{profile.bio.username}</span>
+            <span class="nav-item">{profile?.userId?.firstName}</span>
             <ul id="open-profile" class={openMenu === true ? "open" : null}>
               <li onclick="closeSideNav()">
-                <a href={`/contestant/${profile.userId._id}`} class="nav-link"
+                <a href={`/contestant/${profile?.userId?._id}`} class="nav-link"
                   >Profile</a
                 >
               </li>
               <li onclick="closeSideNav()">
-                <a href={`/contestant/settings`} class="nav-link">Settings </a>
+                <a href={`/contestant/edit`} class="nav-link">Settings </a>
               </li>
 
               <li class="logout" on:click={logout} onclick="closeSideNav()">

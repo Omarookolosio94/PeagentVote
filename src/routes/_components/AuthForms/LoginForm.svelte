@@ -4,6 +4,7 @@
   import { closeLogin } from "../../../utilis/utilis";
 
   const { session } = stores();
+
   let user = {
     email: "",
     password: "",
@@ -17,7 +18,8 @@
       $loading = true;
       submitting = true;
       error = null;
-      const response = await fetch("/auth/login", {
+
+      const response = await fetch("/api/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -27,8 +29,38 @@
       });
 
       const res = await response.json();
+
       $loading = false;
       submitting = false;
+
+      if (res.success) {
+        $session.token = res?.data?.token;
+
+        user = {
+          email: "",
+          password: "",
+        };
+
+        alertMsg.set({
+          type: "success",
+          message: [{ msg: "Login Successful" }],
+        });
+        4;
+
+        goto("/");
+        closeLogin();
+      } else {
+        if (res?.data) {
+          error = res.data;
+        } else {
+          alertMsg.set({
+            type: "danger",
+            message: [{ msg: res.message }],
+          });
+        }
+      }
+
+      /*
       if (res.status === 422) {
         error = res.data.data;
       } else if (res.status === 400) {
@@ -38,18 +70,20 @@
         alertMsg.set({
           type: "success",
           message: [{ msg: "Login Successful" }],
-        });
+        });4
+
         goto("/");
         closeLogin();
+
         user = {
           email: "",
           password: "",
         };
       }
+      */
     } catch (error) {
       $loading = false;
       submitting = false;
-      //console.log(error);
     }
   };
 

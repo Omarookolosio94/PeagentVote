@@ -1,9 +1,9 @@
 <script context="module">
   export async function preload({ params }, session) {
     const { userId } = params;
-    //const { token } = session;
-    let profile;
-    //let user;
+    const { token, id } = session;
+    let userProfile;
+    let isUser;
 
     loading.set(true);
 
@@ -11,7 +11,7 @@
       try {
         const res = await this.fetch(`${url}contestants/user/${userId}`);
         const resData = await res.json();
-        profile = await resData.data;
+        userProfile = await resData.data;
       } catch (err) {
         console.log(err);
       }
@@ -20,7 +20,13 @@
     await fetchProfile(userId);
     loading.set(false);
 
-    return { userId, profile };
+    if (id?.toString() == userId.toString()) {
+      isUser = true;
+    } else {
+      isUser = false;
+    }
+
+    return { userProfile, isUser };
   }
 </script>
 
@@ -29,8 +35,8 @@
   import { url } from "../../utilis/utilis";
   import ProfileHead from "../_components/contestant/ProfileHead.svelte";
 
-  export let profile;
-  //export let userId;
+  export let userProfile;
+  export let isUser = false;
 
   const deleteImage = async (imageId) => {
     try {
@@ -52,7 +58,8 @@
         `${url}contestants/picture/${encodeURIComponent(imageId)}`,
         {
           method: "DELETE",
-          headers: {
+          headers: 
+          {
             Authorization: "Bearer " + //$token,
           },
         }
@@ -78,11 +85,12 @@
 </script>
 
 <svelte:head>
-  <title>{profile?.userId?.firstName} {profile?.userId?.lastName}</title>
+  <title>{userProfile?.userId?.firstName} {userProfile?.userId?.lastName}</title
+  >
 </svelte:head>
 
-{#if profile}
-  <ProfileHead {profile} />
+{#if userProfile}
+  <ProfileHead profile={userProfile} {isUser} />
 
   <div class="block">
     <div class="inner width-1">
@@ -91,40 +99,42 @@
           <div class="box-info">
             <h2 class="heading-05 heading-underline style-left">Bio</h2>
             <p>
-              <b>Start: </b>{profile?.bio?.stateOfOrigin
-                ? profile?.bio?.stateOfOrigin
+              <b>State: </b>{userProfile?.bio?.stateOfOrigin
+                ? userProfile?.bio?.stateOfOrigin
                 : "Not Available"}
             </p>
             <p>
               <b>Age: </b>
-              {profile?.bio?.age ? profile?.bio?.age : "Not Available"}
+              {userProfile?.bio?.age ? userProfile?.bio?.age : "Not Available"}
             </p>
             <p>
               <b>Discipline: </b>
-              {profile?.bio?.discipline
-                ? profile?.bio?.discipline
+              {userProfile?.bio?.discipline
+                ? userProfile?.bio?.discipline
                 : "Not Available"}
             </p>
             <p>
               <b>Status: </b>
-              {profile?.isFinalist ? "Finalist" : "Applicant"}
+              {userProfile?.isFinalist ? "Finalist" : "Applicant"}
             </p>
           </div>
         </div>
-        {#if profile.profilePicture.length > 0}
-          {#each profile?.profilePicture as picture}
+        {#if userProfile?.profilePicture?.length > 0}
+          {#each userProfile?.profilePicture as picture}
             <div class="col-4 col-photo">
               <div>
                 <img src={picture.imageURL} alt=" " />
               </div>
-              <div class="box-bl" style="position: absolute;">
-                <button
-                  class="js-visit-item bt-default green-fill btn-danger"
-                  on:click={deleteImage(picture.public_id)}
-                >
-                  Delete
-                </button>
-              </div>
+              {#if isUser}
+                <div class="box-bl" style="position: absolute;">
+                  <button
+                    class="js-visit-item bt-default green-fill btn-danger"
+                    on:click={deleteImage(picture.public_id)}
+                  >
+                    Delete
+                  </button>
+                </div>
+              {/if}
             </div>
           {/each}
         {/if}
