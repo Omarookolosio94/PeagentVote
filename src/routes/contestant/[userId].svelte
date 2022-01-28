@@ -31,8 +31,8 @@
 </script>
 
 <script>
-  import { loading, alertMsg } from "../../store";
-  import { url } from "../../utilis/utilis";
+  import { loading, alertMsg, profile } from "../../store";
+  import { url, formatDate, getVoteCount } from "../../utilis/utilis";
   import { stores } from "@sapper/app";
   import ProfileHead from "../_components/contestant/ProfileHead.svelte";
   const { session } = stores();
@@ -66,6 +66,8 @@
         userProfile.profilePicture = userProfile?.profilePicture.filter(
           (pic) => pic.public_id !== imageId
         );
+
+        $profile.profilePicture = userProfile?.profilePicture;
 
         alertMsg.set({
           type: "success",
@@ -117,6 +119,16 @@
               <b>Status: </b>
               {userProfile?.isFinalist ? "Finalist" : "Applicant"}
             </p>
+            <p>
+              <b>Total Votes: </b>
+              {getVoteCount(userProfile?.votes)}
+            </p>
+            {#if isUser}
+              <p>
+                <b>Last Update Date: </b>
+                {formatDate(userProfile?.updatedAt)}
+              </p>
+            {/if}
           </div>
         </div>
         {#if userProfile?.profilePicture?.length > 0}

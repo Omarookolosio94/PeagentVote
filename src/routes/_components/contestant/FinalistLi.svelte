@@ -1,5 +1,13 @@
 <script>
+  import { getVoteCount } from "../../../utilis/utilis";
+
   export let contestant;
+
+  let voteCount;
+
+  if (contestant) {
+    voteCount = getVoteCount(contestant?.votes);
+  }
   //export let colStyle = null;
 </script>
 
@@ -23,7 +31,9 @@
         <div class="hover-item center">
           <div class="tooltip">
             <div class="box-item">
-              <p style="color: white">Vote</p>
+              <p style="color: white">
+                {getVoteCount(contestant?.votes)} Vote(s)
+              </p>
             </div>
           </div>
         </div>
@@ -44,9 +54,6 @@
         </div>
         <div class="row row-auto">
           {contestant?.bio.username}
-          <!--
-            <strong> <span>Ariere</span> </strong>
-          -->
         </div>
       </div>
       <div class="footer">

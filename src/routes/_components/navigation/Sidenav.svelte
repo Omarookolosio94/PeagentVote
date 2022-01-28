@@ -57,6 +57,10 @@
       </li>
 
       <li onclick="closeSideNav()">
+        <a href="/vote/board" class="nav-link">Vote Board</a>
+      </li>
+
+      <li onclick="closeSideNav()">
         <a href="/about" class="nav-link">About Us</a>
       </li>
     </ul>

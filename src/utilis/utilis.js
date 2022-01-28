@@ -110,3 +110,22 @@ export function closeLogin() {
 export function openProfile() {
   open_profile.style.display = "block";
 }
+
+export function getVoteCount(votes) {
+  let voteCount = 0;
+
+  if (votes) {
+    if (votes?.length > 0) {
+      let voteList = votes.map((vote) => vote.voteCount);
+
+      for (let i = 0; i < voteList.length; i++) {
+        voteCount += voteList[i];
+      }
+      return voteCount;
+    } else {
+      return voteCount;
+    }
+  } else {
+    return voteCount;
+  }
+}

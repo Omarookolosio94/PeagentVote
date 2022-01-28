@@ -54,8 +54,6 @@
       $loading = false;
       updatingProfile = false;
 
-      console.log(res);
-
       if (res.success) {
         $profile = res?.data;
 
@@ -71,10 +69,10 @@
           message: [{ msg: res.message }],
         });
       }
-    } catch (error) {
+    } catch (err) {
       $loading = false;
       updatingProfile = false;
-      console.log(error);
+      console.log(err);
     }
   };
 

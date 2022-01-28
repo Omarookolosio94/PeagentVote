@@ -15,7 +15,7 @@
       res?.end();
 
       $session.token = null;
-      $session = null;
+      $session.id = null;
       $profile = null;
 
       alertMsg.set({

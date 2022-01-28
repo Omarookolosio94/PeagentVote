@@ -37,7 +37,7 @@
   };
 
   function loadListedFinalist() {
-    if (page > totalPages) return console.log("Pages Reached Limit");
+    if (page > totalPages) return;
 
     pageLoading = true;
 
