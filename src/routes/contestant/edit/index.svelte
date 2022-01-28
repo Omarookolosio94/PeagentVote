@@ -10,7 +10,7 @@
   import ProfileDetailsForm from "../../_components/contestant/profileForms/ProfileDetailsForm.svelte";
   import ProfileImageForm from "../../_components/contestant/profileForms/ProfileImageForm.svelte";
   import Tabs from "../../_components/Tabs.svelte";
-  import { stores } from "@sapper/app";
+  import { stores, goto } from "@sapper/app";
   import BackBtn from "../../../components/BackBtn.svelte";
   import { loading, profile, alertMsg } from "../../../store";
   import { url } from "../../../utilis/utilis";
@@ -23,51 +23,52 @@
   ];
   let currentTab;
 
-  const deleteProfile = async () => {
-    /*
+  const deleteAccount = async () => {
     try {
       if ($session.token === undefined || null) return;
       if (
         !window.confirm(
-          `Your profile and all your publications would be deleted permenently.This process cannot be reversed. Do you still want to continue? `
+          `Your account and all related data would be deleted permenently.This process cannot be reversed. Do you still want to continue? `
         )
       )
         return;
 
       loading.set(true);
-      const res = await fetch(`${url}/users/deleteaccount`, {
+
+      const response = await fetch(`${url}contestants`, {
         method: "DELETE",
         headers: {
           Authorization: "Bearer " + $session.token,
         },
       });
 
-      const resData = await res.json();
+      const res = await response.json();
+      loading.set(false);
 
-      console.log(resData);
-      if (res.status === 401) {
-        alertMsg.set({ type: "danger", message: [{ msg: resData.message }] });
-      } else {
-        await fetch("/auth/logout", {
-          method: "POST",
-        });
-
-        loading.set(false);
-
+      if (res.success) {
         $session.token = null;
-        $user = null;
+        $profile = null;
 
         alertMsg.set({
           type: "success",
-          message: [{ msg: resData.message }],
+          message: [{ msg: res.message }],
+        });
+
+        goto("/");
+      } else {
+        alertMsg.set({
+          type: "danger",
+          message: [{ msg: res.message }],
         });
       }
     } catch (err) {
       loading.set(false);
-      console.log(err);
+
+      alertMsg.set({
+        type: "success",
+        message: [{ msg: "An error occured. Please try again" }],
+      });
     }
-    */
-    console.log("Deleting profile");
   };
 </script>
 
@@ -95,7 +96,7 @@
 
     <p class="horizontal-center">
       <strong
-        ><span class="link-2 danger" on:click={deleteProfile}
+        ><span class="link-2 danger" on:click={deleteAccount}
           >Delete Account</span
         ></strong
       >

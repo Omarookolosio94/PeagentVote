@@ -1,60 +1,118 @@
 <script>
-  import { goto, stores } from "@sapper/app";
-  import { onDestroy } from "svelte";
   import { alertMsg, loading } from "../../../store";
-  import { closeLogin } from "../../../utilis/utilis";
+  import { onMount } from "svelte";
+  import { url } from "../../../utilis/utilis";
 
-  const { session } = stores();
   let user = {
-    userName: "",
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  };
+
+  let error = {
+    firstName: "",
+    lastName: "",
     email: "",
     password: "",
   };
 
-  let error;
   let submitting = false;
 
   const handleRegister = async () => {
     try {
       $loading = true;
+
       submitting = true;
-      error = null;
-      const response = await fetch("/auth/register", {
+
+      if (
+        user?.firstName == null ||
+        user?.firstName?.length < 1 ||
+        user?.lastName == null ||
+        user?.lastName.length < 1 ||
+        user?.email == null ||
+        user?.email?.length < 1 ||
+        user?.password == null ||
+        user?.password.length < 1 ||
+        user?.confirmPassword == null ||
+        user?.confirmPassword.length < 1
+      ) {
+        $loading = false;
+        submitting = false;
+
+        return alertMsg.set({
+          type: "danger",
+          message: [{ msg: "Please pass in all required information" }],
+        });
+      }
+
+      if (user?.password != user?.confirmPassword) {
+        $loading = false;
+
+        submitting = false;
+
+        error.password = "Password must match";
+
+        return;
+      }
+
+      let newUser = {
+        firstName: user?.firstName,
+        lastName: user?.lastName,
+        email: user?.email,
+        password: user?.password,
+      };
+
+      const response = await fetch(`${url}auth/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
         },
-        body: JSON.stringify(user),
+        body: JSON.stringify(newUser),
       });
 
       const res = await response.json();
+
       $loading = false;
       submitting = false;
 
-      if (res.status === 422) {
-        error = res.data.data;
-      } else if (res.status === 400) {
-        alertMsg.set({ type: "danger", message: [{ msg: res.data.message }] });
-      } else {
+      if (res.success) {
         alertMsg.set({
           type: "success",
           message: [{ msg: res.message }],
         });
-        goto("/");
-        closeLogin();
-        user = {
-          email: "",
-          password: "",
-          userName: "",
-        };
+
+        //goto("/contestant/" + $profile?.userId?._id);
+      } else {
+        //error = res?.data;
+
+        alertMsg.set({
+          type: "danger",
+          message: [{ msg: res.message }],
+        });
       }
-    } catch (error) {
+    } catch (err) {
       $loading = false;
       submitting = false;
-      //console.log(error);
+
+      alertMsg.set({
+        type: "danger",
+        message: [{ msg: "An error occured. Please try again." }],
+      });
     }
   };
+
+  onMount(async () => {
+    user = {
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+    };
+  });
 
   const clearError = (e) => {
     if (!error) return;
@@ -91,16 +149,37 @@
           <input
             type="text"
             class="text-input"
-            name="userName"
-            placeholder="Username"
-            bind:value={user.userName}
+            name="firstName"
+            placeholder="Firstname"
+            bind:value={user.firstName}
             on:focus={clearError}
           />
           {#if error}
-            {#if error.userName}
+            {#if error.firstName}
               <div class="msg error">
                 <ul>
-                  <li>{error.userName}</li>
+                  <li>{error.firstName}</li>
+                </ul>
+              </div>
+            {/if}
+          {/if}
+        </div>
+        <p />
+        <p />
+        <div class="form-group">
+          <input
+            type="text"
+            class="text-input"
+            name="lastName"
+            placeholder="Username"
+            bind:value={user.lastName}
+            on:focus={clearError}
+          />
+          {#if error}
+            {#if error.lastName}
+              <div class="msg error">
+                <ul>
+                  <li>{error.lastName}</li>
                 </ul>
               </div>
             {/if}
@@ -137,6 +216,14 @@
             placeholder="Password"
             on:focus={clearError}
             bind:value={user.password}
+          />
+          <input
+            type="password"
+            class="text-input"
+            name="confirmPassword"
+            placeholder="Confirm Password"
+            on:focus={clearError}
+            bind:value={user.confirmPassword}
           />
           {#if error}
             {#if error.password}

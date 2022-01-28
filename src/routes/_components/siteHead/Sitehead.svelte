@@ -8,14 +8,15 @@
   onMount(async () => {
     try {
       $loading = true;
-      //const res = await fetch(`${url}contestants/finalist/random?num=1`);
+      const res = await fetch(`${url}contestants/finalist/random?num=1`);
+      /*
       const res = await fetch(
         `${url}contestants/user/61eb371ea4365d2d4fd10411`
       );
-
+      */
       const resData = await res.json();
 
-      todayContestant = await resData.data;
+      todayContestant = await resData.data[0];
 
       $loading = false;
     } catch (err) {
@@ -32,7 +33,7 @@
         <!-- svelte-ignore a11y-img-redundant-alt -->
         <img
           src={todayContestant?.profilePicture?.length > 0
-            ? todayContestant?.profilePicture[2]?.imageLgURL
+            ? todayContestant?.profilePicture[0]?.imageLgURL
             : `https://source.unsplash.com/1900x700/weekly?contest`}
           alt="Background Large Image"
           width="1900"
@@ -46,7 +47,7 @@
         <!--svelte-ignore a11y-img-redundant-alt-->
         <img
           src={todayContestant.profilePicture.length > 0
-            ? todayContestant.profilePicture[2].imageURL
+            ? todayContestant.profilePicture[0]?.imageURL
             : `https://source.unsplash.com/1900x700/weekly?contest`}
           data-srcset=""
           width="417"

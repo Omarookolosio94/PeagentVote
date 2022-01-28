@@ -64,7 +64,7 @@
           message: [{ msg: res.message }],
         });
 
-        goto("/contestant/" + $profile?.userId);
+        goto("/contestant/" + $profile?.userId?._id);
       } else {
         alertMsg.set({
           type: "danger",
