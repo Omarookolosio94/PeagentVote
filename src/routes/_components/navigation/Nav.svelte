@@ -9,13 +9,13 @@
 
   const { session } = stores();
 
-  async function logout() {
+  async function logout(req, res) {
     try {
-      await fetch("/api/Logout", {
-        method: "POST",
-      });
+      delete req?.session?.token;
+      res?.end();
 
       $session.token = null;
+      $session = null;
       $profile = null;
 
       alertMsg.set({

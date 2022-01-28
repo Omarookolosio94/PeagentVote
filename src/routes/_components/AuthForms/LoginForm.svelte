@@ -19,7 +19,7 @@
       submitting = true;
       error = null;
 
-      const response = await fetch("api/Login", {
+      const response = await fetch(`${url}auth`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
