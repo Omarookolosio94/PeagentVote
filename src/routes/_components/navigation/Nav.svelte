@@ -9,10 +9,11 @@
 
   const { session } = stores();
 
-  async function logout(req, res) {
+  async function logout() {
     try {
-      delete req?.session?.token;
-      res?.end();
+      await fetch("/api/Logout", {
+        method: "POST",
+      });
 
       $session.token = null;
       $profile = null;
@@ -26,7 +27,7 @@
     }
   }
 
-  async function fetchProfile() {
+  async function fetchProfile(req) {
     try {
       $loading = true;
       const res = await fetch(`${url}contestants/user`, {
@@ -34,6 +35,7 @@
           Authorization: "Bearer " + $session.token,
         },
       });
+
       const resData = await res.json();
 
       $profile = { ...resData.data };

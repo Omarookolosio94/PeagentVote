@@ -17,6 +17,9 @@ export async function post(req, res) {
     });
 
     const resData = await result.json();
+
+    req.session.token = resData.data.token;
+
     res.end(JSON.stringify(resData));
   } catch (err) {
     res.end(

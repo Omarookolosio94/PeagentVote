@@ -33,50 +33,50 @@
 <script>
   import { loading, alertMsg } from "../../store";
   import { url } from "../../utilis/utilis";
+  import { stores } from "@sapper/app";
   import ProfileHead from "../_components/contestant/ProfileHead.svelte";
+  const { session } = stores();
 
   export let userProfile;
   export let isUser = false;
 
   const deleteImage = async (imageId) => {
     try {
-      //if ($session.token === undefined || null || !article) return;
+      if ($session.token === undefined || null || !imageId) return;
 
       if (!window.confirm(`This image would be Deleted Permenently`)) return;
 
       loading.set(true);
 
-      loading.set(false);
-
-      alertMsg.set({
-        type: "success",
-        message: [{ msg: "Article Deleted Successfully" }],
-      });
-
-      /*
-      const res = await fetch(
+      const response = await fetch(
         `${url}contestants/picture/${encodeURIComponent(imageId)}`,
         {
           method: "DELETE",
-          headers: 
-          {
-            Authorization: "Bearer " + //$token,
+          headers: {
+            Authorization: "Bearer " + $session?.token,
           },
         }
       );
 
-      const resData = await res.json();
       loading.set(false);
-      if (res.status === 401) {
-        alertMsg.set({ type: "danger", message: [{ msg: resData.message }] });
-      } else {
-        dispatch("deleteArticle", article._id);
+
+      const res = await response.json();
+
+      if (res.success) {
+        userProfile.profilePicture = userProfile?.profilePicture.filter(
+          (pic) => pic.public_id !== imageId
+        );
+
         alertMsg.set({
           type: "success",
-          message: [{ msg: resData.message }],
+          message: [{ msg: res.message }],
+        });
+      } else {
+        alertMsg.set({
+          type: "danger",
+          message: [{ msg: res.message }],
         });
       }
-*/
     } catch (err) {
       loading.set(false);
       console.log(err);
@@ -123,13 +123,13 @@
           {#each userProfile?.profilePicture as picture}
             <div class="col-4 col-photo">
               <div>
-                <img src={picture.imageURL} alt=" " />
+                <img src={picture?.imageURL} alt=" " />
               </div>
               {#if isUser}
                 <div class="box-bl" style="position: absolute;">
                   <button
                     class="js-visit-item bt-default green-fill btn-danger"
-                    on:click={deleteImage(picture.public_id)}
+                    on:click={deleteImage(picture?.public_id)}
                   >
                     Delete
                   </button>
@@ -151,6 +151,7 @@
 
   .btn-danger:hover {
     color: #111;
+    background-color: #e6eaea;
   }
 
   @media screen and (max-width: 700px) {

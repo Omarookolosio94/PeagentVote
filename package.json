@@ -9,15 +9,15 @@
     "start": "node __sapper__/build"
   },
   "dependencies": {
-    "body-parser": "^1.19.1",
+    "body-parser": "^1.19.0",
     "compression": "^1.7.1",
-    "express-session": "^1.17.2",
+    "express-session": "^1.17.1",
     "node-fetch": "^2.6.0",
-    "polka": "next",
+    "polka": "^1.0.0-next.22",
     "serialize-javascript": "^4.0.0",
-    "session-file-store": "^1.5.0",
+    "session-file-store": "^1.4.0",
     "sirv": "^1.0.0",
-    "svelte-quill": "^1.2.0"
+    "svelte-quill": "^1.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",

@@ -1,5 +1,5 @@
 <script>
-  import { onMount } from 'svelte';
+  import { onMount } from "svelte";
   export let items = [];
   export let activeTabValue;
 
@@ -17,8 +17,9 @@
   {#if Array.isArray(items)}
     {#each items as item}
       <li
-        class={activeTabValue === item.value ? 'active' : ''}
-        on:click={handleClick(item.value)}>
+        class={activeTabValue === item.value ? "active" : ""}
+        on:click={handleClick(item.value)}
+      >
         <span>{item.label}</span>
       </li>
     {/each}

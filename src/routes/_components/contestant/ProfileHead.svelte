@@ -75,7 +75,7 @@
       <div class="box-center">
         <div class="avatar">
           <img
-            src={profile.profilePicture.length > 0
+            src={profile.profilePicture?.length > 0
               ? profile?.profilePicture[0]?.image140URL
               : "https://images.unsplash.com/photo-1511367461989-f85a21fda167?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=140&h=140"}
             width="70"
