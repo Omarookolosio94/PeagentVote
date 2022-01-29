@@ -166,7 +166,7 @@
           <div class="row">
             <div class="heading-large text-capitalize">
               <p>
-                {formatDate($about?.endDate)}
+                {formatDate($about?.startDate)} - {formatDate($about?.endDate)}
               </p>
             </div>
           </div>
@@ -174,8 +174,8 @@
             <div class="by">
               <strong>
                 <span class="text-x-thin">
-                  Event commences {formatDate($about?.endDate)}, register and
-                  stand a chance to win amazing prizes
+                  Event commences from <b>{formatDate($about?.startDate)}</b
+                  >.Register and stand a chance to win amazing prizes
                 </span>
               </strong>
             </div>

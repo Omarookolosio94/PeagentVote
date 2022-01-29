@@ -149,7 +149,7 @@
                       {error.message}
                     </span>
                   {:else}
-                    <span> Recommended size: 400x400px. <br />3MB max. </span>
+                    <span> Recommended size: 400x400px. <br />5MB max. </span>
                   {/if}
                 </li>
               </ul>

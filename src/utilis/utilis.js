@@ -17,7 +17,7 @@ const months = [
 export const url = "https://peagent.herokuapp.com/api/";
 
 // const maxsize = 3145728;
-const maxsize = 2;
+const maxsize = 5;
 
 const fileType = ["image/png", "image/jpg", "image/jpeg"];
 
