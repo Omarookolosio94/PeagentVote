@@ -129,3 +129,18 @@ export function getVoteCount(votes) {
     return voteCount;
   }
 }
+
+export function formatCountDate(date) {
+  var seconds = ("0" + Math.floor((date / 1000) % 60)).slice(-2).toString();
+  var minutes = ("0" + Math.floor((date / 1000 / 60) % 60))
+    .slice(-2)
+    .toString();
+  var hours = ("0" + Math.floor((date / (1000 * 60 * 60)) % 24))
+    .slice(-2)
+    .toString();
+  var days = Math.floor(date / (1000 * 60 * 60 * 24)).toString();
+
+  var remainingDays = `${days} Days: ${hours} Hours: ${minutes} Minutes: ${seconds} Seconds`;
+
+  return remainingDays;
+}

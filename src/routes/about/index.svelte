@@ -79,7 +79,7 @@
               General Info
             </h2>
             <p><b>Start Date:</b> {formatDate($about?.startDate)}</p>
-            <p><b>End Date:</b> {formatDate($about?.startDate)}</p>
+            <p><b>End Date:</b> {formatDate($about?.endDate)}</p>
             <p>
               <b>Status:</b>
               {$about?.isInProgress ? "In Progress" : "Not In Progress"}
