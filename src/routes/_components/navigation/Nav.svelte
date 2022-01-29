@@ -74,5 +74,5 @@
   });
 </script>
 
-<Sidenav {logout} profile={$profile} />
+<Sidenav {logout} profile={$profile} about={$about} />
 <Header {logout} profile={$profile} about={$about} />

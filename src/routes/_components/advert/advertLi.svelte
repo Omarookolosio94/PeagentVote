@@ -39,3 +39,11 @@
     </div>
   </div>
 </li>
+
+<style>
+  @media screen and (max-width: 700px) {
+    .box-bl {
+      display: block !important;
+    }
+  }
+</style>

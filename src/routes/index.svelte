@@ -174,8 +174,8 @@
             <div class="by">
               <strong>
                 <span class="text-x-thin">
-                  Event commences from <b>{formatDate($about?.startDate)}</b
-                  >.Register and stand a chance to win amazing prizes
+                  Event commences from <b>{formatDate($about?.startDate)}</b>.
+                  Register and stand a chance to win amazing prizes
                 </span>
               </strong>
             </div>
