@@ -111,7 +111,9 @@
           {#if profile?.isFinalist && !isUser}
             <li>
               <a
-                href="/vote/{profile?.userId._id}"
+                href="/vote/{profile?.userId._id}/{profile?.bio
+                  ?.username}/{profile?.userId?.firstName}/{profile?.userId
+                  ?.lastName}"
                 disabled
                 class="bt-default medium black"
               >

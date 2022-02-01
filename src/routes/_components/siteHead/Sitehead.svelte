@@ -94,7 +94,7 @@
         <div class="box-bl">
           <a
             href={`
-          /vote`}
+          /vote/${todayContestant?.userId?._id}/${todayContestant?.bio?.username}/${todayContestant?.userId?.firstName}/${todayContestant?.userId?.lastName}`}
             class="js-visit-item bt-default green-fill"
           >
             Vote
@@ -105,3 +105,10 @@
     </div>
   </div>
 {/if}
+
+<style>
+  .js-visit-item.bt-default.green-fill:hover {
+    color: #111;
+    background-color: #e6eaea;
+  }
+</style>

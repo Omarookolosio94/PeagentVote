@@ -67,7 +67,7 @@
               <li>
                 <div class="box-left">
                   <div class="avatar">
-                    <a href="/annicheva/">
+                    <a href={`/contestant/${vote?.userId}`}>
                       <img
                         class="lazy lazy-loaded"
                         src={vote?.profilePic
