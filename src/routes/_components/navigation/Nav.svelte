@@ -1,7 +1,31 @@
+<script context="module">
+  export async function preload() {
+    loading.set(true);
+
+    const fetchAbout = async () => {
+      try {
+        const response = await this.fetch(`${url}admin/about`);
+
+        const res = await response.json();
+
+        if (res?.sucess) about.set(await resData.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    await fetchAbout();
+
+    loading.set(false);
+
+    return;
+  }
+</script>
+
 <script>
   import Sidenav from "./Sidenav.svelte";
   import Header from "./Header.svelte";
-  import { goto, stores } from "@sapper/app";
+  import { stores } from "@sapper/app";
   import { alertMsg, profile, loading, about } from "../../../store";
   import { url } from "../../../utilis/utilis";
   import { beforeUpdate, onMount } from "svelte";

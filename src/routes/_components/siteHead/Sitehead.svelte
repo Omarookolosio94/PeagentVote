@@ -1,3 +1,27 @@
+<script context="module">
+  export async function preload() {
+    loading.set(true);
+
+    const fetchAbout = async () => {
+      try {
+        const response = await this.fetch(`${url}admin/about`);
+
+        const res = await response.json();
+
+        if (res?.sucess) about.set(await resData.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    await fetchAbout();
+
+    loading.set(false);
+
+    return;
+  }
+</script>
+
 <script>
   import { onMount } from "svelte";
   import { formatDate, url } from "../../../utilis/utilis";
