@@ -27,7 +27,7 @@
 
 <script>
   import { loading } from "../../../store";
-  import { url } from "../../../utilis/utilis";
+  import { url, openLogin } from "../../../utilis/utilis";
   import { stores, goto } from "@sapper/app";
   const { session } = stores();
 
@@ -54,9 +54,20 @@
         <h1 class="heading-x-large">
           <blockquote>{verifiedToken?.message}</blockquote>
         </h1>
-        <p>
-          {verifiedToken?.success ? "Proceed To Login" : "Please try again"}
-        </p>
+
+        {#if verifiedToken?.success}
+          <div class="box-bl">
+            <a
+              href={""}
+              class="js-visit-item bt-default green-fill"
+              on:click={openLogin}
+            >
+              Proceed To Login
+            </a>
+          </div>
+        {:else}
+          <p>Please try again</p>
+        {/if}
       </div>
     </div>
   </div>

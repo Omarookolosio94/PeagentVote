@@ -13,8 +13,8 @@ const months = [
   "December",
 ];
 
-//export const url = "http://localhost:5000/api/";
-export const url = "https://peagent.herokuapp.com/api/";
+export const url = "http://localhost:5000/api/";
+//export const url = "https://peagent.herokuapp.com/api/";
 export const refCode = "3207900WEB";
 export const paystack_public_key =
   "pk_test_5d0c4e407726895baa4dbd8624f82417ca963410";

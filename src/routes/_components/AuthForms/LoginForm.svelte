@@ -71,7 +71,6 @@
 
   const clearError = (e) => {
     if (!error) return;
-
     error[e.target.name] = null;
   };
 </script>
