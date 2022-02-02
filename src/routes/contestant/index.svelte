@@ -1,7 +1,7 @@
 <svelte:options immutable />
 
 <script>
-  import { populate, url } from "../../utilis/utilis";
+  import { populate, url, contestName } from "../../utilis/utilis";
   import { onMount } from "svelte";
   import Boxheading from "../_components/Boxheading.svelte";
   import { loading, about } from "../../store";
@@ -78,7 +78,7 @@
 </script>
 
 <svelte:head>
-  <title>Welcome to {$about?.name}</title>
+  <title>Welcome to {contestName}</title>
 </svelte:head>
 
 <svelte:window on:scroll={page < totalPages && populate(loadListedFinalist)} />
