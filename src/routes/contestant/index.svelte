@@ -49,8 +49,31 @@
     pageLoading = false;
   }
 
+  const fetchAbout = async () => {
+    try {
+      $loading = true;
+
+      const response = await fetch(`${url}admin/about`);
+
+      const res = await response.json();
+      $loading = false;
+
+      if (res?.success) {
+        $about = await res.data;
+      }
+    } catch (err) {
+      $loading = false;
+
+      console.log(err);
+    }
+  };
+
   onMount(async () => {
     fetchFinalist(1, 5);
+  });
+
+  onMount(async () => {
+    fetchAbout();
   });
 </script>
 
@@ -79,7 +102,7 @@
     </div>
   </div>
 {:else if $about?.isInProgress == true}
-  <FlyerHead inProgress={true} />
+  <FlyerHead inProgress={true} about={$about} />
 {:else}
-  <FlyerHead inProgress={false} />
+  <FlyerHead inProgress={false} about={$about} />
 {/if}

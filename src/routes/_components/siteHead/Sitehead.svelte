@@ -1,6 +1,6 @@
 <script>
   import { onMount } from "svelte";
-  import { formatDate, url, openLogin } from "../../../utilis/utilis";
+  import { formatDate, url } from "../../../utilis/utilis";
   import { loading, about } from "../../../store";
   import FlyerHead from "./flyerHead.svelte";
 
@@ -20,6 +20,29 @@
       $loading = false;
       console.log(err);
     }
+  });
+
+  const fetchAbout = async () => {
+    try {
+      $loading = true;
+
+      const response = await fetch(`${url}admin/about`);
+
+      const res = await response.json();
+      $loading = false;
+
+      if (res?.success) {
+        $about = await res.data;
+      }
+    } catch (err) {
+      $loading = false;
+
+      console.log(err);
+    }
+  };
+
+  onMount(async () => {
+    fetchAbout();
   });
 </script>
 
@@ -102,7 +125,7 @@
     </div>
   </div>
 {:else}
-  <FlyerHead inProgress={true} />
+  <FlyerHead inProgress={true} about={$about} />
 {/if}
 
 <style>

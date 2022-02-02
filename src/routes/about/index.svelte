@@ -49,7 +49,7 @@
   });
 
   onMount(async () => {
-    if (!$about) fetchAbout();
+    fetchAbout();
   });
 </script>
 

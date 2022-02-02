@@ -1,7 +1,7 @@
 <svelte:options immutable />
 
 <script>
-  import { populate, url, formatDate, openLogin } from "../utilis/utilis";
+  import { populate, url } from "../utilis/utilis";
   import { onMount } from "svelte";
   import Sitehead from "./_components/siteHead/Sitehead.svelte";
   import Boxheading from "./_components/Boxheading.svelte";
@@ -153,7 +153,7 @@
     </div>
   {/if}
 {:else}
-  <FlyerHead inProgress={false} />
+  <FlyerHead inProgress={false} about={$about} />
 {/if}
 
 <div class="block p-0">
