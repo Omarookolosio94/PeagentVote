@@ -10,15 +10,18 @@
 
   async function logout() {
     try {
+      await fetch("/api/logout", {
+        method: "POST",
+      });
+
       $session.token = null;
-      profile.set(null);
+      $session.id = null;
+      $profile = null;
 
       alertMsg.set({
         type: "success",
         message: [{ msg: "See You Later" }],
       });
-
-      goto("/");
     } catch (err) {
       console.log(err);
     }
@@ -33,9 +36,13 @@
           Authorization: "Bearer " + $session.token,
         },
       });
+
       const resData = await res.json();
+
       $profile = { ...resData.data };
+
       $session.id = resData?.data?.userId?._id;
+
       $loading = false;
     } catch (err) {
       $loading = false;
