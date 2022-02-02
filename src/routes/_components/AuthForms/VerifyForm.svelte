@@ -15,9 +15,6 @@
       submitting = true;
       error = null;
 
-      console.log(user);
-      console.log(url);
-
       const response = await fetch(`${url}auth/resend`, {
         method: "POST",
         headers: {
@@ -28,7 +25,6 @@
       });
 
       const res = await response.json();
-      console.log(res);
 
       $loading = false;
       submitting = false;

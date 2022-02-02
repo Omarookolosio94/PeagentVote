@@ -49,7 +49,6 @@
   });
 
   onMount(async () => {
-    console.log($about);
     if (!$about) fetchAbout();
   });
 </script>
