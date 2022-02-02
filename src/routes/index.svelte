@@ -110,19 +110,10 @@
   };
 
   onMount(async () => {
-    fetchRandomFinalist();
-  });
-
-  onMount(async () => {
-    fetchFinalist(1, 5);
-  });
-
-  onMount(async () => {
-    fetchAbout();
-  });
-
-  onMount(async () => {
-    fetchSponsors();
+    await fetchRandomFinalist();
+    await fetchFinalist(1, 5);
+    await fetchAbout();
+    await fetchSponsors();
   });
 </script>
 
