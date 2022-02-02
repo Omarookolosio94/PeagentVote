@@ -6,6 +6,7 @@
   import Boxheading from "../_components/Boxheading.svelte";
   import { loading, about } from "../../store";
   import FinalistLi from "../_components/contestant/FinalistLi.svelte";
+  import FlyerHead from "../_components/siteHead/flyerHead.svelte";
 
   let listedFinalist = [];
   let page = 1;
@@ -59,22 +60,26 @@
 
 <svelte:window on:scroll={page < totalPages && populate(loadListedFinalist)} />
 
-<div class="block pt-0" id="block-sotd">
-  <div class="inner">
-    <Boxheading
-      headStyle="no-flex"
-      headTitle="Explore"
-      headSpan="Vote for your favourite"
-    />
+{#if listedFinalist.length > 0}
+  <div class="block pt-0" id="block-sotd">
+    <div class="inner">
+      <Boxheading
+        headStyle="no-flex"
+        headTitle="Explore"
+        headSpan="Vote for your favourite"
+      />
 
-    <div class="grid js-grid">
-      <ul class="list-items list-flex list-one-row">
-        {#if listedFinalist}
+      <div class="grid js-grid">
+        <ul class="list-items list-flex list-one-row">
           {#each listedFinalist as contestant}
             <FinalistLi {contestant} />
           {/each}
-        {/if}
-      </ul>
+        </ul>
+      </div>
     </div>
   </div>
-</div>
+{:else if $about?.isInProgress == true}
+  <FlyerHead inProgress={true} />
+{:else}
+  <FlyerHead inProgress={false} />
+{/if}

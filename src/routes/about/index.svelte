@@ -1,8 +1,57 @@
 <script>
-  import { about } from "../../store";
-  import { formatDate } from "../../utilis/utilis";
+  import { onMount } from "svelte";
+  import { about, loading } from "../../store";
+  import { formatDate, url } from "../../utilis/utilis";
   import Sponsors from "../_components/advert/sponsors.svelte";
   import Boxheading from "../_components/Boxheading.svelte";
+
+  let sponsors = [];
+
+  const fetchSponsors = async () => {
+    try {
+      $loading = true;
+
+      const response = await fetch(`${url}sponsor`);
+      const res = await response.json();
+      $loading = false;
+
+      if (res?.success) {
+        sponsors = await res.data;
+      }
+    } catch (err) {
+      $loading = false;
+
+      console.log(err);
+    }
+  };
+
+  const fetchAbout = async () => {
+    try {
+      $loading = true;
+
+      const response = await fetch(`${url}admin/about`);
+
+      const res = await response.json();
+      $loading = false;
+
+      if (res?.success) {
+        $about = await res.data;
+      }
+    } catch (err) {
+      $loading = false;
+
+      console.log(err);
+    }
+  };
+
+  onMount(async () => {
+    fetchSponsors();
+  });
+
+  onMount(async () => {
+    console.log($about);
+    if (!$about) fetchAbout();
+  });
 </script>
 
 {#if about}
@@ -47,21 +96,11 @@
             {@html $about?.rules}
           </div>
         </div>
-        <!--
 
-          <div class="col-4 col-photo">
-            <div>
-              <img
-                src="https://assets.awwwards.com/assets/images/pages/about-us/jury-01.jpg"
-                alt=" "
-              />
-            </div>
-          </div>
-        -->
         <div class="col-4 col-photo has-desktop">
           <div>
             <img
-              src="https://assets.awwwards.com/assets/images/pages/about-us/jury-02.jpg"
+              src="https://source.unsplash.com/773x773/weekly?rule"
               alt=" "
             />
           </div>
@@ -102,11 +141,11 @@
 
     <div class="grid">
       <ul class="list-items list-flex list-one-row">
-        <Sponsors />
-        <Sponsors />
-        <Sponsors />
-        <Sponsors />
-        <Sponsors />
+        {#if sponsors.length > 0}
+          {#each sponsors as sponsor}
+            <Sponsors {sponsor} />
+          {/each}
+        {/if}
       </ul>
     </div>
   </div>

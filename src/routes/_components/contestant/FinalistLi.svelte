@@ -25,7 +25,7 @@
             class="lazy lazy-loaded"
             src={contestant.profilePicture.length > 0
               ? contestant.profilePicture[0]?.imageSmURL
-              : `https://source.unsplash.com/313x224/weekly?model}`}
+              : `https://source.unsplash.com/313x224/weekly?model`}
           />
         </div>
         <div class="hover-item center">
@@ -64,7 +64,8 @@
         </div>
         <div class="box-right">
           <a
-            href={`/contestant/${contestant.userId._id}`}
+            href={`
+            /vote/${contestant?.userId?._id}/${contestant?.bio?.username}/${contestant?.userId?.firstName}/${contestant?.userId?.lastName}`}
             class="bt-default small"
           >
             <span>Vote</span>

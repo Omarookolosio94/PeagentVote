@@ -1,7 +1,8 @@
 <script>
   import { onMount } from "svelte";
-  import { formatDate, url } from "../../../utilis/utilis";
-  import { loading } from "../../../store";
+  import { formatDate, url, openLogin } from "../../../utilis/utilis";
+  import { loading, about } from "../../../store";
+  import FlyerHead from "./flyerHead.svelte";
 
   let todayContestant;
 
@@ -9,11 +10,7 @@
     try {
       $loading = true;
       const res = await fetch(`${url}contestants/finalist/random?num=1`);
-      /*
-      const res = await fetch(
-        `${url}contestants/user/61eb371ea4365d2d4fd10411`
-      );
-      */
+
       const resData = await res.json();
 
       todayContestant = await resData.data[0];
@@ -104,6 +101,8 @@
       </div>
     </div>
   </div>
+{:else}
+  <FlyerHead inProgress={true} />
 {/if}
 
 <style>

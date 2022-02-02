@@ -9,9 +9,11 @@
   import AdvertLi from "./_components/advert/advertLi.svelte";
   import FinalistLi from "./_components/contestant/FinalistLi.svelte";
   import Sponsors from "./_components/advert/sponsors.svelte";
+  import FlyerHead from "./_components/siteHead/flyerHead.svelte";
 
   let todayFinalist = [];
   let listedFinalist = [];
+  let sponsors = [];
   let page = 1;
   let totalPages;
   let pageLoading;
@@ -89,6 +91,24 @@
     }
   };
 
+  const fetchSponsors = async () => {
+    try {
+      $loading = true;
+
+      const response = await fetch(`${url}sponsor/list/random?num=2`);
+      const res = await response.json();
+      $loading = false;
+
+      if (res?.success) {
+        sponsors = await res.data;
+      }
+    } catch (err) {
+      $loading = false;
+
+      console.log(err);
+    }
+  };
+
   onMount(async () => {
     fetchRandomFinalist();
   });
@@ -99,6 +119,10 @@
 
   onMount(async () => {
     fetchAbout();
+  });
+
+  onMount(async () => {
+    fetchSponsors();
   });
 </script>
 
@@ -129,79 +153,7 @@
     </div>
   {/if}
 {:else}
-  <div class="box-site-head">
-    <div class="box-bg has-tablet">
-      <a href="\about">
-        <!-- svelte-ignore a11y-img-redundant-alt -->
-        <img
-          src={$about?.flyers?.length > 0
-            ? $about?.flyers[0]?.imageLgURL
-            : `https://source.unsplash.com/1900x700/weekly?green`}
-          alt={$about?.name}
-          width="1900"
-          height="700"
-          class="lazy lazy-loaded"
-        />
-      </a>
-    </div>
-    <div class="box-photo has-mobile">
-      <a href="/about">
-        <!--svelte-ignore a11y-img-redundant-alt-->
-        <img
-          src={$about?.flyers?.length > 0
-            ? $about?.flyers[0]?.imageLgURL
-            : `https://source.unsplash.com/1900x700/weekly?green`}
-          width="417"
-          height="298"
-          alt={$about?.name}
-          class="lazy"
-        />
-      </a>
-    </div>
-    <div class="box-content" style="">
-      <!--svelte-ignore a11y-missing-content -->
-      <a href="/about" class="site-link" />
-      <div class="inner vertical-center">
-        <div class="box-info">
-          <div class="row">
-            <div class="heading-large text-capitalize">
-              <p>
-                {formatDate($about?.startDate)} - {formatDate($about?.endDate)}
-              </p>
-            </div>
-          </div>
-          <div class="row">
-            <div class="by">
-              <strong>
-                <span class="text-x-thin">
-                  Event commences from <b>{formatDate($about?.startDate)}</b>.
-                  Register and stand a chance to win amazing prizes
-                </span>
-              </strong>
-            </div>
-          </div>
-        </div>
-        <div class="box-breadcrumb">
-          <div class="box-left">
-            <strong class="parent">
-              <a href="#!">{$about?.name}</a>
-            </strong>
-          </div>
-          <div class="box-right" />
-        </div>
-        <div class="box-bl">
-          <a
-            href={""}
-            class="js-visit-item bt-default green-fill"
-            on:click={openLogin}
-          >
-            Register
-          </a>
-        </div>
-        <div class="box-br" />
-      </div>
-    </div>
-  </div>
+  <FlyerHead inProgress={false} />
 {/if}
 
 <div class="block p-0">
@@ -216,38 +168,34 @@
     <div class="grid">
       <ul class="list-items list-flex list-one-row">
         <AdvertLi />
-        <Sponsors />
-        <Sponsors />
+        {#if sponsors.length > 0}
+          {#each sponsors as sponsor}
+            <Sponsors {sponsor} />
+          {/each}
+        {/if}
       </ul>
     </div>
   </div>
 </div>
 
 {#if $about?.isInProgress}
-  <div class="block pt-0" id="block-sotd">
-    <div class="inner">
-      <Boxheading
-        headStyle="no-flex"
-        headTitle="Explore"
-        headSpan="Vote for your favourite"
-      />
+  {#if listedFinalist?.length > 0}
+    <div class="block pt-0" id="block-sotd">
+      <div class="inner">
+        <Boxheading
+          headStyle="no-flex"
+          headTitle="Explore"
+          headSpan="Vote for your favourite"
+        />
 
-      <div class="grid js-grid">
-        <ul class="list-items list-flex list-one-row">
-          {#if listedFinalist}
+        <div class="grid js-grid">
+          <ul class="list-items list-flex list-one-row">
             {#each listedFinalist as contestant}
               <FinalistLi {contestant} />
             {/each}
-          {/if}
-        </ul>
+          </ul>
+        </div>
       </div>
     </div>
-  </div>
+  {/if}
 {/if}
-
-<style>
-  .js-visit-item.bt-default.green-fill:hover {
-    color: #111;
-    background-color: #e6eaea;
-  }
-</style>

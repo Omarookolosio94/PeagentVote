@@ -100,6 +100,20 @@
               </li>
             {/each}
           </ul>
+        {:else}
+          <ul class="list-users-votes" id="jury_votes">
+            <li>
+              <div class="box-left">
+                <div class="info">
+                  <div class="rows">
+                    <div class="row">
+                      <strong>Voting has not commenced yet</strong>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
         {/if}
       </div>
     </div>

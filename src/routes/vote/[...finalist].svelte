@@ -22,7 +22,6 @@
   import { stores } from "@sapper/app";
   import Tabs from "../_components/Tabs.svelte";
   import BackBtn from "../../components/BackBtn.svelte";
-  const { session } = stores();
 
   export let contestantId;
   export let username;
@@ -54,20 +53,18 @@
     $loading = true;
     voting = true;
 
-    if (vote.voteCount < 1) {
-      error.voteCount = "Can only cast at least one vote";
-
+    if (vote.voterEmail.length > 0 && !vote.voterEmail.match(emailRegex)) {
+      error.voterEmail = "Email is not valid";
       $loading = false;
       voting = false;
-
       return;
     }
 
-    if (vote.voterEmail.length > 1 && !vote.voterEmail.match(emailRegex)) {
-      error.voterEmail = "Email is not valid";
+    if (vote.voteCount < 1) {
+      error.voteCount = "Can only cast at least one vote";
       $loading = false;
-
       voting = false;
+
       return;
     }
 
@@ -137,6 +134,12 @@
       });
     }
   };
+
+  const clearError = (e) => {
+    if (!error) return;
+
+    error[e.target.name] = null;
+  };
 </script>
 
 <svelte:head>
@@ -185,6 +188,7 @@
                     bind:value={vote.voterEmail}
                     class="text-input"
                     max="30"
+                    on:focus={clearError}
                   />
                   {#if error}
                     {#if error.voterEmail}
@@ -240,7 +244,9 @@
                     name="voteCount"
                     bind:value={vote.voteCount}
                     class="text-input"
+                    on:focus={clearError}
                   />
+
                   {#if error}
                     {#if error.voteCount}
                       <div class="msg error">
@@ -252,6 +258,9 @@
                   {/if}
                   <div class="msg">
                     <ul>
+                      <li style="color: black">
+                        Total Cost <b>{vote.voteCount * pricePerVote} Naira</b>
+                      </li>
                       <li>
                         *Each Vote Cost <b>{$about?.costPerVote}</b> Naira
                       </li>

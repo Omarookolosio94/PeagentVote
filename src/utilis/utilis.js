@@ -13,19 +13,18 @@ const months = [
   "December",
 ];
 
-export const url = "http://localhost:5000/api/";
-//export const url = "https://peagent.herokuapp.com/api/";
+//export const url = "http://localhost:5000/api/";
+export const url = "https://peagent.herokuapp.com/api/";
 export const refCode = "3207900WEB";
 export const paystack_public_key =
   "pk_test_5d0c4e407726895baa4dbd8624f82417ca963410";
 export const pricePerVote = 50;
 export const backEmail = "omarookolosio94@gmail.com";
-export const emailRegex =
-  "var validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:.[a-zA-Z0-9-]+)*$/";
 
-// const maxsize = 3145728;
 const maxsize = 5;
 
+export const emailRegex =
+  /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:.[a-zA-Z0-9-]+)*$/;
 const fileType = ["image/png", "image/jpg", "image/jpeg"];
 
 export const convertToMB = (size) => {
@@ -57,7 +56,7 @@ export const checkFileSize = (size) => {
   if (!size) return;
 
   size = convertToMB(size);
-  if (size > maxsize) {
+  if (size > +maxsize) {
     return {
       success: false,
       message: `${size}MB Too Large`,

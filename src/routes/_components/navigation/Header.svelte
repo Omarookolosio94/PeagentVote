@@ -65,7 +65,7 @@
     </div>
     <div class="box-right">
       <!-- Login Action -->
-      {#if !$session.token}
+      {#if $session.token == null || $session.token == "null"}
         <div class="item login">
           <span>Are you a contestant?</span>
           <strong on:click={openLogin}>
@@ -76,42 +76,44 @@
         </div>
       {:else}
         <div class="item logged has-tablet">
-          <a
-            href={`/contestant/${profile?.userId._id}`}
-            class="text-black text-capitalize profile-name"
-            >{profile?.userId.firstName}</a
-          >
-          <div class="bt-dropdown bt-menu-user">
-            <figure class="avatar">
-              <img
-                src={profile && profile.profilePicture.length > 0
-                  ? profile?.profilePicture[0].image140URL
-                  : "https://images.unsplash.com/photo-1511367461989-f85a21fda167?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=70&h=70"}
-                alt={profile?.bio?.username}
-                width="32"
-                height="32"
-              />
-            </figure>
-            <div class="ico-menu">
-              <div class="bar" />
-              <div class="bar" />
-              <div class="bar" />
+          {#if profile}
+            <a
+              href={`/contestant/${profile?.userId?._id}`}
+              class="text-black text-capitalize profile-name"
+              >{profile?.userId?.firstName}</a
+            >
+            <div class="bt-dropdown bt-menu-user">
+              <figure class="avatar">
+                <img
+                  src={profile && profile?.profilePicture?.length > 0
+                    ? profile?.profilePicture[0].image140URL
+                    : "https://images.unsplash.com/photo-1511367461989-f85a21fda167?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=70&h=70"}
+                  alt={profile?.bio?.username}
+                  width="32"
+                  height="32"
+                />
+              </figure>
+              <div class="ico-menu">
+                <div class="bar" />
+                <div class="bar" />
+                <div class="bar" />
+              </div>
+              <ul>
+                <li>
+                  <a href={`/contestant/${profile?.userId?._id}`}>Profile</a>
+                </li>
+
+                <li><a href={`/contestant/edit`}>Settings </a></li>
+
+                <li class="logout" on:click={logout}>
+                  <a href=" ">
+                    Logout
+                    <div class="icon"><i class="fal fa-sign-out" /></div>
+                  </a>
+                </li>
+              </ul>
             </div>
-            <ul>
-              <li>
-                <a href={`/contestant/${profile?.userId?._id}`}>Profile</a>
-              </li>
-
-              <li><a href={`/contestant/edit`}>Settings </a></li>
-
-              <li class="logout" on:click={logout}>
-                <a href=" ">
-                  Logout
-                  <div class="icon"><i class="fal fa-sign-out" /></div>
-                </a>
-              </li>
-            </ul>
-          </div>
+          {/if}
         </div>
       {/if}
 
