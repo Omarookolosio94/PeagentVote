@@ -19,7 +19,7 @@ export const refCode = "3207900WEB";
 export const paystack_public_key =
   "pk_test_5d0c4e407726895baa4dbd8624f82417ca963410";
 export const pricePerVote = 50;
-export const backEmail = "omarookolosio94@gmail.com";
+export const backEmail = "tiarasandqueens@gmail.com";
 
 const maxsize = 5;
 
