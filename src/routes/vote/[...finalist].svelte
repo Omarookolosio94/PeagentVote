@@ -12,15 +12,12 @@
 <script>
   import { loading, alertMsg, about } from "../../store";
   import {
-    refCode,
     paystack_public_key,
     pricePerVote,
     backEmail,
     url,
     emailRegex,
   } from "../../utilis/utilis";
-  import { stores } from "@sapper/app";
-  import Tabs from "../_components/Tabs.svelte";
   import BackBtn from "../../components/BackBtn.svelte";
 
   export let contestantId;
@@ -42,12 +39,6 @@
   };
 
   let voting = false;
-
-  let tabItems = [
-    { label: `Cast Vote for ${username}`, value: 1 },
-    { label: "Vote Rules", value: 2 },
-  ];
-  let currentTab;
 
   const payWithPaystack = async () => {
     $loading = true;
@@ -150,142 +141,130 @@
 <div class="block js-purchase-type" data-type="submission">
   <div class="inner width-2">
     <!--
-
-      <div class="head-box-form">
-        <h1 class="heading-large horizontal-center">Vote For {username}</h1>
-      </div>
     -->
 
-    <Tabs bind:activeTabValue={currentTab} items={tabItems} />
+    <div class="head-box-form">
+      <p class="horizontal-center" style="font-size: 24px; font-weight: bold">
+        Vote For {firstname}
+        {lastname} - {username}
+      </p>
+    </div>
 
-    {#if 1 === currentTab}
-      <form on:submit|preventDefault={payWithPaystack}>
-        <div class="box-form-fields">
-          <ul>
-            <li>
-              <div class="row right">
-                <div class="form-group has-info">
-                  <input
-                    type="text"
-                    name="name"
-                    value={`${firstname} ${lastname}`}
-                    class="text-input"
-                    max="30"
-                    disabled
-                  />
-                </div>
-              </div>
-            </li>
-            <li>
-              <div class="row left">
-                <label for="voterEmail"><strong>Voter Email</strong></label>
-              </div>
-              <div class="row right">
-                <div class="form-group has-info">
-                  <input
-                    type="text"
-                    name="voterEmail"
-                    bind:value={vote.voterEmail}
-                    class="text-input"
-                    max="30"
-                    on:focus={clearError}
-                  />
-                  {#if error}
-                    {#if error.voterEmail}
-                      <div class="msg error">
-                        <ul>
-                          <li>{error.voterEmail}</li>
-                        </ul>
-                      </div>
-                    {/if}
+    <form on:submit|preventDefault={payWithPaystack}>
+      <div class="box-form-fields">
+        <ul>
+          <li>
+            <div class="row left">
+              <label for="voterEmail"><strong>Voter Email</strong></label>
+            </div>
+            <div class="row right">
+              <div class="form-group has-info">
+                <input
+                  type="text"
+                  name="voterEmail"
+                  bind:value={vote.voterEmail}
+                  class="text-input"
+                  max="30"
+                  on:focus={clearError}
+                />
+                {#if error}
+                  {#if error.voterEmail}
+                    <div class="msg error">
+                      <ul>
+                        <li>{error.voterEmail}</li>
+                      </ul>
+                    </div>
                   {/if}
-                  <div class="msg">
-                    <ul>
-                      <li>
-                        *Not Required, Please input your email to recieve
-                        payment receipt
-                      </li>
-                    </ul>
-                  </div>
+                {/if}
+                <div class="msg">
+                  <ul>
+                    <li>
+                      *Not Required, Please input your email to recieve payment
+                      receipt
+                    </li>
+                  </ul>
                 </div>
               </div>
-            </li>
-            <li>
-              <div class="row left">
-                <label for="VoterName"><strong>Voter Name</strong></label>
-              </div>
-              <div class="row right">
-                <div class="form-group has-info">
-                  <input
-                    type="text"
-                    name="voterName"
-                    bind:value={vote.voterName}
-                    class="text-input"
-                    max="30"
-                  />
-                  <div class="msg">
-                    <ul>
-                      <li>*Not Required</li>
-                    </ul>
-                  </div>
+            </div>
+          </li>
+          <li>
+            <div class="row left">
+              <label for="VoterName"><strong>Voter Name</strong></label>
+            </div>
+            <div class="row right">
+              <div class="form-group has-info">
+                <input
+                  type="text"
+                  name="voterName"
+                  bind:value={vote.voterName}
+                  class="text-input"
+                  max="30"
+                />
+                <div class="msg">
+                  <ul>
+                    <li>*Not Required</li>
+                  </ul>
                 </div>
               </div>
-            </li>
-            <li>
-              <div class="row left">
-                <label for="voteCount" class="asterisk-required"
-                  ><strong>Number of Votes</strong></label
-                >
-              </div>
-              <div class="row right">
-                <div class="form-group">
-                  <input
-                    type="number"
-                    name="voteCount"
-                    bind:value={vote.voteCount}
-                    class="text-input"
-                    on:focus={clearError}
-                  />
+            </div>
+          </li>
+          <li>
+            <div class="row left">
+              <label for="voteCount" class="asterisk-required"
+                ><strong>Number of Votes</strong></label
+              >
+            </div>
+            <div class="row right">
+              <div class="form-group">
+                <input
+                  type="number"
+                  name="voteCount"
+                  bind:value={vote.voteCount}
+                  class="text-input"
+                  on:focus={clearError}
+                />
 
-                  {#if error}
-                    {#if error.voteCount}
-                      <div class="msg error">
-                        <ul>
-                          <li>{error.voteCount}</li>
-                        </ul>
-                      </div>
-                    {/if}
+                {#if error}
+                  {#if error.voteCount}
+                    <div class="msg error">
+                      <ul>
+                        <li>{error.voteCount}</li>
+                      </ul>
+                    </div>
                   {/if}
-                  <div class="msg">
-                    <ul>
-                      <li style="color: black">
-                        Total Cost <b>{vote.voteCount * pricePerVote} Naira</b>
-                      </li>
-                      <li>
-                        *Each Vote Cost <b>{$about?.costPerVote}</b> Naira
-                      </li>
-                    </ul>
-                  </div>
+                {/if}
+                <div class="msg">
+                  <ul>
+                    <li style="color: black">
+                      Total Cost <b>{vote.voteCount * pricePerVote} Naira</b>
+                    </li>
+                    <li>
+                      *Each Vote Cost <b>{$about?.costPerVote}</b> Naira
+                    </li>
+                  </ul>
                 </div>
               </div>
-            </li>
-          </ul>
-        </div>
+            </div>
+          </li>
+        </ul>
+      </div>
 
-        <p>
-          <input
-            type="submit"
-            value={voting ? "Voting..." : "Cast Vote"}
-            class="button large bold width-full"
-            disabled={voting}
-          />
-        </p>
-      </form>
-    {/if}
+      <p>
+        <input
+          type="submit"
+          value={voting ? "Voting..." : "Cast Vote"}
+          class="button large bold width-full"
+          disabled={voting}
+        />
+      </p>
+    </form>
 
-    {#if 2 === currentTab}
-      {@html $about?.rules}
-    {/if}
+    <!--
+
+  {#if 2 === currentTab}
+    {@html $about?.rules}
+  {/if}
+-->
 
     <BackBtn />
   </div>
