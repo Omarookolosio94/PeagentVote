@@ -143,7 +143,11 @@
     </div>
 
     <div class="box-section">
-      <form class="register_form" on:submit|preventDefault={handleRegister}>
+      <form
+        class="register_form"
+        on:submit|preventDefault={handleRegister}
+        autocomplete="off"
+      >
         <p />
         <div class="form-group">
           <input

@@ -84,6 +84,7 @@
         method="post"
         class="forgot_password_form"
         on:submit|preventDefault={handleVerification}
+        autocomplete="off"
       >
         <div class="form-group has-info">
           <p>

@@ -150,7 +150,7 @@
       </p>
     </div>
 
-    <form on:submit|preventDefault={payWithPaystack}>
+    <form on:submit|preventDefault={payWithPaystack} autocomplete="off">
       <div class="box-form-fields">
         <ul>
           <li>
