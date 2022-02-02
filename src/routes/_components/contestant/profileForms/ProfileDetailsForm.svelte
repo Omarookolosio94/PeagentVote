@@ -226,7 +226,7 @@
           </div>
           <div class="row right">
             <div class="box-text-input">
-              <span class="size-medium">https://twitter.com/</span>
+              <span class="size-medium">Twitter.com/</span>
               <input
                 type="text"
                 name="twitter"
@@ -235,7 +235,7 @@
               />
             </div>
             <div class="box-text-input">
-              <span class="size-medium">https://www.facebook.com/</span>
+              <span class="size-medium">Facebook</span>
               <input
                 type="text"
                 name="facebook"
@@ -244,7 +244,7 @@
               />
             </div>
             <div class="box-text-input">
-              <span class="size-medium">https://instagram.com/</span>
+              <span class="size-medium">Instagram</span>
               <input
                 type="text"
                 name="instagram"
@@ -253,7 +253,7 @@
               />
             </div>
             <div class="box-text-input">
-              <span class="size-medium">https://youtube.com/</span>
+              <span class="size-medium">Youtube</span>
               <input
                 type="text"
                 name="youtube"
