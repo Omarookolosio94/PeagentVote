@@ -112,7 +112,7 @@
                 <div class="content">
                   <div class="row" />
                   <div class="row row-auto">
-                    Register to become a contestabt
+                    Register to become a contestant
                   </div>
                 </div>
                 <div class="footer">
