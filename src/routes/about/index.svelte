@@ -1,27 +1,3 @@
-<script context="module">
-  export async function preload() {
-    loading.set(true);
-
-    const fetchAbout = async () => {
-      try {
-        const response = await this.fetch(`${url}admin/about`);
-
-        const res = await response.json();
-
-        if (res?.sucess) about.set(await resData.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
-    await fetchAbout();
-
-    loading.set(false);
-
-    return;
-  }
-</script>
-
 <script>
   import { onMount } from "svelte";
   import { about, loading } from "../../store";
@@ -49,41 +25,18 @@
     }
   };
 
-  const fetchAbout = async () => {
-    try {
-      $loading = true;
-
-      const response = await fetch(`${url}admin/about`);
-
-      const res = await response.json();
-      $loading = false;
-
-      if (res?.success) {
-        $about = await res.data;
-      }
-    } catch (err) {
-      $loading = false;
-
-      console.log(err);
-    }
-  };
-
-  onMount(async () => {
-    fetchAbout();
-  });
-
   onMount(async () => {
     fetchSponsors();
   });
 </script>
 
-{#if about}
+{#if $about}
   <div class="block">
     <div class="inner width-1">
       <div class="page-headings style2">
         <hr />
         <h1 class="heading-x-large">
-          <blockquote>{$about?.name}</blockquote>
+          <blockquote>{$about.name ? $about.name : " "}</blockquote>
         </h1>
         <p>
           {$about?.summary}

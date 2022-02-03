@@ -1,29 +1,5 @@
 <svelte:options immutable />
 
-<script context="module">
-  export async function preload() {
-    loading.set(true);
-
-    const fetchAbout = async () => {
-      try {
-        const response = await this.fetch(`${url}admin/about`);
-
-        const res = await response.json();
-
-        if (res?.sucess) about.set(await resData.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
-    await fetchAbout();
-
-    loading.set(false);
-
-    return;
-  }
-</script>
-
 <script>
   import { populate, url, contestName } from "../utilis/utilis";
   import { onMount } from "svelte";
@@ -40,7 +16,6 @@
   let sponsors = [];
   let page = 1;
   let totalPages;
-  let pageLoading;
 
   const fetchFinalist = async (page = 1, limit = 5) => {
     try {
@@ -96,6 +71,7 @@
     }
   };
 
+  /*
   const fetchAbout = async () => {
     try {
       $loading = true;
@@ -114,6 +90,7 @@
       console.log(err);
     }
   };
+  */
 
   const fetchSponsors = async () => {
     try {
@@ -136,7 +113,6 @@
   onMount(async () => {
     await fetchRandomFinalist();
     await fetchFinalist(1, 5);
-    await fetchAbout();
     await fetchSponsors();
   });
 </script>

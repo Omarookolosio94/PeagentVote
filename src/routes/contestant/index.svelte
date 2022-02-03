@@ -1,31 +1,7 @@
 <svelte:options immutable />
 
-<script context="module">
-  export async function preload() {
-    loading.set(true);
-
-    const fetchAbout = async () => {
-      try {
-        const response = await this.fetch(`${url}admin/about`);
-
-        const res = await response.json();
-
-        if (res?.sucess) about.set(await resData.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
-    await fetchAbout();
-
-    loading.set(false);
-
-    return;
-  }
-</script>
-
 <script>
-  import { populate, url, contestName } from "../../utilis/utilis";
+  import { populate, url, contestName, openLogin } from "../../utilis/utilis";
   import { onMount } from "svelte";
   import Boxheading from "../_components/Boxheading.svelte";
   import { loading, about } from "../../store";
@@ -73,29 +49,6 @@
     pageLoading = false;
   }
 
-  const fetchAbout = async () => {
-    try {
-      $loading = true;
-
-      const response = await fetch(`${url}admin/about`);
-
-      const res = await response.json();
-      $loading = false;
-
-      if (res?.success) {
-        $about = await res.data;
-      }
-    } catch (err) {
-      $loading = false;
-
-      console.log(err);
-    }
-  };
-
-  onMount(async () => {
-    fetchAbout();
-  });
-
   onMount(async () => {
     fetchFinalist(1, 5);
   });
@@ -125,8 +78,60 @@
       </div>
     </div>
   </div>
-{:else if $about?.isInProgress == true}
-  <FlyerHead inProgress={true} about={$about} />
 {:else}
-  <FlyerHead inProgress={false} about={$about} />
+  <div class="block pt-0" id="block-sotd">
+    <div class="inner">
+      <Boxheading headStyle="no-flex" headTitle="Register" headSpan="" />
+
+      <div class="grid js-grid">
+        <ul class="list-items list-flex list-one-row">
+          <li class="collection col-3">
+            <div class="box-item">
+              <figure class="rollover">
+                <!--svelte-ignore a11y-missing-content -->
+                <a href={""} on:click={openLogin} class="item-link">
+                  <div class="box-photo">
+                    <img
+                      alt=""
+                      width="417"
+                      height="298"
+                      class="lazy lazy-loaded"
+                      src={`https://source.unsplash.com/313x224/weekly?model`}
+                    />
+                  </div>
+                  <div class="hover-item center">
+                    <div class="tooltip">
+                      <div class="box-item">
+                        <p style="color: white" />
+                      </div>
+                    </div>
+                  </div>
+                </a>
+              </figure>
+              <div class="box-info">
+                <div class="content">
+                  <div class="row" />
+                  <div class="row row-auto">
+                    Register to become a contestabt
+                  </div>
+                </div>
+                <div class="footer">
+                  <div class="box-left">
+                    <div class="box-users-likes">
+                      <div class="container-bt-circle" />
+                    </div>
+                  </div>
+                  <div class="box-right">
+                    <a href={""} class="bt-default small" on:click={openLogin}>
+                      <span>Vote</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
 {/if}

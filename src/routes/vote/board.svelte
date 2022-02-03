@@ -118,6 +118,42 @@
       </div>
     </div>
   </div>
+{:else}
+  <div class="inner width-1">
+    <div class="box-page-votation">
+      <div class="box-information">
+        <div class="header">
+          <div class="box-left">
+            <ul class="menu-tabs">
+              <li class="active">
+                <div class="menu-item jury_votes">CANDIDATES</div>
+              </li>
+              <li>
+                <div class="menu-item user_votes">VOTES</div>
+              </li>
+            </ul>
+          </div>
+          <div class="box-right">
+            <span class="title">VOTES</span>
+          </div>
+        </div>
+
+        <ul class="list-users-votes" id="jury_votes">
+          <li>
+            <div class="box-left">
+              <div class="info">
+                <div class="rows">
+                  <div class="row">
+                    <strong>Voting has not commenced yet</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
 {/if}
 
 <style>

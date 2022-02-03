@@ -1,5 +1,5 @@
 <script>
-  import { openLogin } from "../../../utilis/utilis";
+  import { openLogin, contestName } from "../../../utilis/utilis";
   import { stores } from "@sapper/app";
   const { session } = stores();
 
@@ -130,7 +130,7 @@
     <div class="logo-header">
       <a href="/">
         <span style="font-size: 14px;">
-          {about?.name}
+          {about ? about?.name : contestName}
         </span>
         <!--
           <span>

@@ -1,5 +1,5 @@
 <script>
-  import { about } from "../../store";
+  export let about;
 </script>
 
 <footer id="footer">
@@ -7,7 +7,7 @@
     <div class="inner">
       <div class="box-left">
         <h2 class="headline slogan not-mobile">
-          {$about?.name}
+          {about?.name}
         </h2>
         <ul class="menu-footer">
           <li><a href="/about" class="item">About Us</a></li>
@@ -15,23 +15,23 @@
           <li><a href="/about#sponsors" class="item">Sponsors</a></li>
         </ul>
         <p class="follow">
-          {#if $about?.social}
+          {#if about?.social}
             <strong>Contact us</strong>
-            <a rel="noopener" href={$about.social.twitter} target="_blank"
+            <a rel="noopener" href={about.social.twitter} target="_blank"
               >Twitter</a
             >
-            <a rel="noopener" href={$about?.social.facebook} target="_blank"
+            <a rel="noopener" href={about?.social.facebook} target="_blank"
               >Facebook</a
             >
-            <a rel="noopener" href={$about?.social.instagram} target="_blank"
+            <a rel="noopener" href={about?.social.instagram} target="_blank"
               >Instagram</a
             >
-            <a rel="noopener" href={$about?.social.youtube} target="_blank"
+            <a rel="noopener" href={about?.social.youtube} target="_blank"
               >Youtube</a
             >
-            <a href={`tel:` + $about?.social?.whatsapp}>Whatsapp </a>
+            <a href={`tel:` + about?.social?.whatsapp}>Whatsapp </a>
             <a
-              href={`mailto:` + $about?.social.email}
+              href={`mailto:` + about?.social.email}
               target="_blank"
               rel="noopener noreferrer">Email</a
             >

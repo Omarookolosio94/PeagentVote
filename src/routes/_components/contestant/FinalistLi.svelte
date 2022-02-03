@@ -2,7 +2,6 @@
   import { getVoteCount } from "../../../utilis/utilis";
 
   export let contestant;
-
   let voteCount;
 
   if (contestant) {

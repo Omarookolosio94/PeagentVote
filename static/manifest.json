@@ -1,20 +1,20 @@
 {
 	"background_color": "#ffffff",
 	"theme_color": "#333333",
-	"name": "Matrix Peagent",
-	"short_name": "Matrix",
+	"name": "Tiaras and Queens",
+	"short_name": "TQ Contest",
 	"display": "minimal-ui",
 	"start_url": "/",
 	"icons": [{
-			"src": "logo-192.png",
+			"src": "peagent_logo.svg",
 			"sizes": "192x192",
-			"type": "image/png",
+			"type": "image/svg",
 			"purpose": "any maskable"
 		},
 		{
-			"src": "logo-512.png",
+			"src": "peagent_logo.svg",
 			"sizes": "512x512",
-			"type": "image/png",
+			"type": "image/svg",
 			"purpose": "any maskable"
 		}
 	]
