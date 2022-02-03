@@ -53,16 +53,17 @@
 
       <li onclick="closeSideNav()"><a href="/" class="nav-link">Home</a></li>
 
-      {#if about?.isInProgress}
-        <li onclick="closeSideNav()">
-          <a href="/contestant" class="nav-link">Contestants</a>
-        </li>
+      {#if about}
+        {#if about?.isInProgress == true}
+          <li onclick="closeSideNav()">
+            <a href="/contestant" class="nav-link">Contestants</a>
+          </li>
 
-        <li onclick="closeSideNav()">
-          <a href="/vote/board" class="nav-link">Vote Board</a>
-        </li>
+          <li onclick="closeSideNav()">
+            <a href="/vote/board" class="nav-link">Vote Board</a>
+          </li>
+        {/if}
       {/if}
-
       <li onclick="closeSideNav()">
         <a href="/about" class="nav-link">About Us</a>
       </li>
