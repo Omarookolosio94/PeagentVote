@@ -16,8 +16,8 @@ const months = [
 //export const url = "http://localhost:5000/api/";
 export const url = "https://peagent.herokuapp.com/api/";
 export const refCode = "3207900WEB";
-export const paystack_public_key =
-  "pk_test_5d0c4e407726895baa4dbd8624f82417ca963410";
+//export const paystack_public_key ="pk_test_5d0c4e407726895baa4dbd8624f82417ca963410";
+export const paystack_public_key ="pk_test_1bf37efbabbbe2b458c62d4357118ffe585e2649";
 export const pricePerVote = 50;
 export const backEmail = "tiarasandqueens@gmail.com";
 export const contestName = "Tiaras and Queens Contest";
